@@ -1,0 +1,40 @@
+\section{A.I-3-ii}
+\label{a-1-3-2}
+We propose the algorithm as follow.
+
+\begin{algorithm}
+  \caption{Finding minimum number of squares in a row}
+  \begin{algorithmic}
+    \Require Set of Points $P$
+    \Ensure Set of Covering Square $S$
+    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+    \renewcommand{\algorithmicensure}{\textbf{Output:}}
+    \algnewcommand\algorithmicoperation{\textbf{Operation:}}
+    \algnewcommand\Operation{\item[\algorithmicoperation]}
+    \Operation
+    \State set $currentCoveringPosition = 0$
+    \State QuickSortAscending($S$)
+    \ForAll {Point $p$ in $P$}
+    \If {$p.x \leq currentCoveringPosition$}
+    \State create square $s = (p.x, 1, p.x + 1, 0)$;
+    \State add $s$ to $S$
+    \State set $currentCoveringPosition = p.x + 1$
+    \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+This algorithm is correct because:
+
+\begin{itemize}
+    \item Every point in $p$ will be covered by a square
+    \item There are no intersections between the squares because we traverse in one direction
+  \end{itemize}
+
+  This algorithm consists of 2 parts: QuickSort and Traversing the Point to create squares. Let $t$ be the run time of this algorithm, $t_{quicksort}$ be the time for quick-sort, and $t_{assign}$ be the time for creating the squares. We have:
+
+  \begin{equation}
+    t = t_{quicksort} + t_{assign} \leq n\log n + n = O(n\log n)
+  \end{equation}
+
+  Thus the runtime of this algorithm is $O(n\log n$).
