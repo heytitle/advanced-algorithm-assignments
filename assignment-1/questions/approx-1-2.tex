@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+From the question, we know that
+\begin{align*}
+m &= 10\\
+\sum\limits_{j=1}^n t_j &\ge 1000 \\
+t_j  &\in [1,20] \,; for \, all \, i \le j \le n 
+\end{align*}
+
+Let $T^{\prime}_{i^*}$ denote the load of $M_i$ before $t_j^*$, last job, is assigned to the machine. \\
+Thus $T_i^*$, which represents makespan of the assignment, equals to
+
+\begin{align*}
+T_i^* = T^{\prime}_{i^*} + t_j^*
+\end{align*}
+
+Because $T^{\prime}_{i^*}$ is the minimum load among all machines, so that we can derive
+
+\begin{align*}
+T^{\prime}_{i^*} \le \frac{1}{m}\sum\limits_{i=1}^m T^{\prime}_i = \sum\limits_{j=1}^{j^*} t_j \le \frac{1}{m} \bigg[ \sum\limits_{j=1}^n t_j - t_j^*  \bigg] \le LB
+\end{align*}
+
+Then we can derive
+\begin{align*}
+T_i^* &= T^{\prime}_{i^*} + t_j^* \\
+&\le \frac{1}{m} \bigg[ \sum\limits_{j=1}^n t_j - t_j^*  \bigg] + t_j^* \\
+&\le \frac{1}{m} \sum\limits_{j=1}^n t_j + ( 1 - \frac{1}{m} ) t_j^* \\
+&\le 100 + ( 1 - \frac{1}{10} ) 20 \\
+&\le 118
+\end{align*}
+
+According $Algorithm\, Greedy\, Scheduling$ and the question, we know
+\begin{align*}
+max \bigg( \frac{1}{m}\sum\limits_{j=1}^n t_j \, , \underset{1\le j \le n }{max(t_j) }\bigg) &\le LB \le OPT \\
+\underset{1\le j \le n }{max(t_j)} &= 20 \\
+\end{align*}
+
+Then we can derive
+\begin{align*}
+max \bigg( \frac{1}{m}\sum\limits_{j=1}^n t_j \, , 20 \bigg) &\le LB
+\end{align*}
+
+Since $\frac{1}{m}\sum\limits_{j=1}^n t_j \ge 1000$, thus
+\begin{align*}
+100 &\le LB \\
+&\le OPT
+\end{align*}
+
+Therefore, approximation-ratio($\rho$) equals to
+\begin{align*}
+T_i^* &\le \rho \, OPT \\
+\frac{118}{100} &\le \rho \\
+1.18 &\le \rho 
+\end{align*}
+
+For this particular setting, $Algorithm \,Greedy \,Scheduling$ is 1.18 approximation algorithm.
+
+\end{document}
