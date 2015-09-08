@@ -1,0 +1,10 @@
+#!/bin/bash
+
+(
+    cd $1 &&
+    pdflatex main.tex &&
+    mv main.pdf "../dist/$1.pdf"
+)
+
+echo "---------------"
+echo "$1 is compiled!"
