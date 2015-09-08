@@ -3,10 +3,11 @@
 We propose the algorithm as follow.
 
 \begin{algorithm}
-  \caption{Finding minimum number of squares in a row}
+  \caption{Finding minimum row square cover}
+  \label{alg:row_minimum}
   \begin{algorithmic}
     \Require Set of Points $P$
-    \Ensure Set of Covering Square $S$
+    \Ensure Min Square Cover $min$
     \renewcommand{\algorithmicrequire}{\textbf{Input:}}
     \renewcommand{\algorithmicensure}{\textbf{Output:}}
     \algnewcommand\algorithmicoperation{\textbf{Operation:}}
@@ -20,6 +21,9 @@ We propose the algorithm as follow.
     \State add $s$ to $S$
     \State set $currentCoveringPosition = p.x + 1$
     \EndIf
+    \State set $min = size of S$
+
+    \Return $min$
     \EndFor
   \end{algorithmic}
 \end{algorithm}

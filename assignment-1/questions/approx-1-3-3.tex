@@ -1,0 +1,40 @@
+\section{A.I.3.iii}
+\label{a-1-3-3}
+
+The idea of our algorithm is that, we put all the points in to a coordinate system, then we divide the coordinate system into a set of unit rows (i.e. rows with height 1). For each row, we use algorithm \ref{alg:row_minimum} to find the minimum size square-cover. The global min-square-cover is the sum of all row-square-cover.
+
+\begin{algorithm}
+  \caption{Finding global minimum square cover}
+  \label{alg:global_minimum}
+  \begin{algorithmic}
+    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+    \renewcommand{\algorithmicensure}{\textbf{Output:}}
+    \algnewcommand\algorithmicoperation{\textbf{Operation:}}
+    \algnewcommand\Operation{\item[\algorithmicoperation]}
+    \Require Set of points $P$
+    \Ensure Min Square Cover $min$
+    \Operation
+    \State currentMin = 0;
+    \ForAll {Row $r$ in the space}
+    \State currentMin += FindRowMinSquare()
+    \EndFor
+    \State set $min = currentMin$
+    
+    \Return min
+  \end{algorithmic}
+\end{algorithm}
+
+\textbf{Theorem.} FindingGlobalMinimumSC is $2-approximation$
+
+\begin{proof}
+  Suppose we have the optimal solution with n squares. Then $OPT \geq n$, thus $LB = n$.
+  We know that each unit square in the coordinate system can overlap with at most 2 unit rows.
+
+  Let $min$ be our algorithm solution, then:
+  \begin {equation}
+    min \leq 2n = 2.LB \leq 2.OPT
+  \end {equation}
+
+  Therefore, this algorithm is $2-approximation$.
+
+\end{proof}
