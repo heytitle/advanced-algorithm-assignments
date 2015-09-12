@@ -1,0 +1,25 @@
+\section* {AII.1}
+\label {a2-1}
+\subsection*{(i)}
+We prove this statement by contradiction.
+
+\begin{itemize}
+	\item Suppose that $V \setminus C$ is not an inependent set of $G$. Then there exists a pair of vertices $(u,v)$ in $V \setminus C C$ which are connected by an edge $e \in E$. Thus, both $u$ and $v$ are not in $C$. Therefore, $C$ is not the vertex cover of $G$ anymore.
+	\item Suppose $C$ is not the vertex cover of $G$, then there exists a pair of vertices $(u,v)$ that are connected by an edge $e \in E$ but are not in $C$. Thus, $u \in (V \setminus C)$ and $u \in (V \setminus C)$. Therefore, $(V \setminus C)$ is not the vertex cover of $G$ anymore.
+
+\end{itemize}
+
+From the reasoning above, we can state that: $C$ is the vertex cover of $G$ if and only if $V \setminus C$ is an independent set of $G$.
+
+\subsection*{(ii)}
+We prove that $ApproxMaxIndependentSet$ is not a 2-approximation algorithm by showing a counter example. That is, consider a complete graph, for example, a graph $G = (V, E)$ where $V = {x_1, x_2}$ and $E = (x_1, x_2)$. 
+
+Applying the $ApproxMinVertexCover(G)$, we get $C = {x_1, x_2}$ (picking both vertices from the edge).
+
+Now we take the approx max independent set $ALG = V \setminus C = \emptyset$.
+
+The optimal solution now is $OPT = 1$ (picking $x_1$ or $x_2$).
+
+The approximation ratio is $\rho = \frac{OPT}{ALG} = \infty \neq 2$.
+
+So the approximation ratio is not $2$.
