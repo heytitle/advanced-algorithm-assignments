@@ -1,0 +1,91 @@
+\section* {AII.3}
+\label {a2-3}
+\subsection*{(i)}
+
+Suppose a $d$-hypergraph $G = (V,E)$ which every edge $e$ $\in$ $E$ incidenst to $d$ vertices in $V$. To formulate 0/1 linear programming, we introduce $X$ = \{ $x{_i}$, $x{_2}$, ... , $x{_n}$ \} which $x{_i}$ represents $v_i \in V$ in a linear programming.
+If $x_i$ = 1, it means we pick $v_i$ to the set of double vertex cover, $C$ $\subset$ $V$, and otherwise $x_i$ = 0. For this solution, we want to find a minimum double vertex cover which requires at least 2 vertices from each edge are in $C$. Then, we can derive a constraint for 0/1 linear programming\\.
+
+\begin{center}
+$\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 for all $e \in E$ ;
+\end{center}
+
+
+
+Thus, we then formulate the linear programming.
+
+\begin{tabbing}
+	tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \kill \\ 
+	\> \> Minimize \>\>\>\>\>$\sum\limits_{x=1}^n x_i$  \\ \\
+	\> \> Subject to \\
+	\> \> \> \> $\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 \> \> \> for all $e \in E$ ; at least 2 vertices are selected.\\
+	\> \> \> \> $x_i$ = \{0,1\} \> \> \> for all $x_i \in X$ \\
+\end{tabbing}
+
+\subsection*{(ii)}
+
+Because we can not solve 0/1 linear program in polynomial time, what we have to do next is to relax the program to be a normal
+linear program by replacing \{0,1\} constraint with
+$0 \leq x \leq 1$
+
+Thus, the linear program is
+
+\begin{tabbing}
+    \label{relaxed_lp
+	tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \kill \\ 
+	\> \> Minimize \>\>\>\>\>$\sum\limits_{x=1}^n x_i$  \\ \\
+	\> \> Subject to \\
+	\> \> \> \> $\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 \> \> \> for all $e \in E$ ; at least 2 vertices are selected.\\
+	\> \> \> \> $ 0 \leq x_i \leq 1 $ \> \> \> for all $x_i \in X$ \\
+\end{tabbing}
+
+Let $\tau$ denote the rounding threshold such that
+\begin{align*}
+    x_i = \begin{cases}
+        1, & \text{if } x_i \geq \tau \\
+        0, & \text{otherwise}
+    \end{cases}
+\end{align*}
+
+\begin{algorithm}
+  \caption{Finding double vertex cover}
+  \label{alg:double_vertex_cover}
+  \begin{algorithmic}
+    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+    \renewcommand{\algorithmicensure}{\textbf{Output:}}
+    \algnewcommand\algorithmicoperation{\textbf{Operation:}}
+    \algnewcommand\Operation{\item[\algorithmicoperation]}
+    \Require $V,E$
+    \Ensure A minimum double vertex cover
+    \Operation
+    \State Solve the relaxed linear program corresponding to the given problem.
+    \State \hspace{\algorithmicindent}  Minimize \hspace{\algorithmicindent} $\sum\limits_{x=1}^n x_i$
+    \State \hspace{\algorithmicindent}  Subject to
+    \State \hspace{\algorithmicindent}  \hspace{\algorithmicindent} $\sum\limits_{v_{i} \in e} x_i$ $\geq$ for all $e \in E$
+    \State \hspace{\algorithmicindent}  \hspace{\algorithmicindent} $ 0 \leq x_i \leq 1 $ for all $x_i \in X$
+    \State C $\leftarrow$ \{ $v_i \in V$ : $x_i \geq \tau$ \} \\
+    \Return C
+  \end{algorithmic}
+\end{algorithm}
+
+The next step is to derive $\tau$ such that all constraints are satisfied and the algorithm always return a valid solution. Let denote
+$x^*$ to be an ideal value of any $x_i$ such that it satisfies all constraints.
+\begin{align*}
+\sum\limits_{v_{i} \in e} x_i &\geq 2 \\
+\sum\limits_{i=1}^d x^* &\geq 2 \\
+1 + \sum\limits_{i=1}^{d-1} x^* &\geq 2 \\
+(d-1) x^* &\geq 1 \\
+x^* &\geq \frac{1}{d-1} \\
+\therefore \tau &= \frac{1}{d-1}
+\end{align*}
+
+Let denote $W$ denote the value of an optimal to the relaxed linear program and $OPT$ denote the minium number of double vertex cover.
+Then $OPT \geq W$.
+
+Now we can derive,
+\begin{align*}
+    |C| &= \sum\limits_{v_i \in C} 1 \\
+        &\leq \sum\limits_{v_i \in C} (d-1)x_i \\
+        &\leq (d-1)\leq \sum\limits_{v_i \in C} x_i \\
+        &\leq (d-1)W \\
+        &\leq (d-1)OPT \\
+\end{align*}
