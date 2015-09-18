@@ -85,7 +85,7 @@ Let $m^*$ denote the new boundary of the coordinate after rounding $p_{x}, p_{y}
 and we also know that
 \begin{align*}
 			m &= max(p_x,p_y ) \\
-			OPT &\geq m
+			OPT &\geq 2m
 \end{align*}
 Thus
 \begin{align*}
@@ -96,12 +96,12 @@ Then, we can derive the running time
 \begin{align*}
 	m* &\leq \frac{m}{\Delta} + 1 \\
 	&\leq \frac{m2n\,\sqrt[]{2}}{\epsilon OPT}+1 \\
-	&\leq \frac{m2n\,\sqrt[]{2}}{\epsilon m}+1 \\
-	&\leq \frac{2n\,\sqrt[]{2}}{\epsilon}+1 \\
+	&\leq \frac{m2n\,\sqrt[]{2}}{\epsilon 2m}+1 \\
+	&\leq \frac{n\,\sqrt[]{2}}{\epsilon}+1 \\
 \end{align*}
 
 Therefore, the running time is
 \begin{align*}
-	O\left(nm^*\right) &= O\Big(n\frac{2n\,\sqrt[]{2}}{\epsilon}+1 \Big) \\
-					&= O\Big(\frac{2n^2\,\sqrt[]{2}}{\epsilon} \Big)
+	O\left(nm^*\right) &= O\Big(n\frac{n\,\sqrt[]{2}}{\epsilon}+1 \Big) \\
+	&= O\Big(\frac{n^2\,\sqrt[]{2}}{\epsilon} \Big)
 \end{align*}
