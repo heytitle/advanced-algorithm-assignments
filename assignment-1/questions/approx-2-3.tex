@@ -89,3 +89,31 @@ Now we can derive,
         &\leq (d-1)W \\
         &\leq (d-1)OPT \\
 \end{align*}
+
+\subsection*{(iii)}
+Lets take an example of a complete 3-hypergraph, where the optimal double vertex cover is $|V| - 1$ to make sure every edge has at least 2 vertices selected. So the result of the 0/1-LP is $|V| - 1$.
+
+The relaxed-LP formulation is as follow:
+
+\begin{itemize}
+  \item Miminize $\sum_{i=1}^{n} x_i$
+  
+  \item Subject to:
+    $\sum_{x_j \in e} x_j \geq 2$ for all edge $e$
+    AND $0 \leq x_i \leq 1$
+\end{itemize}
+
+We run the algorithm by performing that relaxed-LP on the complete 3-hypergraph, and then round the result following the condition $x \geq \frac{1}{2}$.
+
+For the complete 3-hypergraph, the relaxed-LP will return $x_i = \frac{2}{3}$ for all $i$ so that each sum of vertices in an edge is 2.
+
+Then the algorithm will pick all of the vertices because they satisfy the condition. The result is:
+
+\begin{align*}
+  ALG = \frac{2}{3}|V|
+\end{align*}
+
+The integrality gap is:
+\begin{align*}
+  integrality = \frac{|V| - 1}{\frac{2|V|l}{3}} = \frac{3}{2} - \frac{3}{2|V|}
+\end{align*}
