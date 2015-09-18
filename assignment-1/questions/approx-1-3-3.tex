@@ -27,14 +27,28 @@ The idea of our algorithm is that, we put all the points in to a coordinate syst
 \textbf{Theorem.} FindingGlobalMinimumSC is $2-approximation$
 
 \begin{proof}
-  Suppose we have the optimal solution with n squares. Then $OPT \geq n$, thus $LB = n$.
-  We know that each unit square in the coordinate system can overlap with at most 2 unit rows.
+  We prove this Theorem by induction.
+  
+  If the optimal solution consists of only 1 square, then $OPT_1 = 1$. After applying our algorithm, the square can be split into at most 2 squares.
 
-  Let $min$ be our algorithm solution, then:
-  \begin {equation}
-    min \leq 2n = 2.LB \leq 2.OPT
-  \end {equation}
+  This is true because if the algorithm returns more than 2 squares, then there is a row which consists of more than 1 square. It means the margin of our points is larger than 1, then there must be more than 1 squares to fit them. It contradicts with our assumption.
+  
+So $ALG_1 \leq 2 = 2OPT_1$
 
-  Therefore, this algorithm is $2-approximation$.
+Suppose when $n = k$, the algorithm is true, that is $ALG_k \leq 2OPT_k$
+
+Now we add some addtional points which insert another square into the optimal solution. Now $n = k + 1$.
+
+We have $OPT_{k+1} = OPT_k + 1$
+
+Applying our algorithm, the final result is the sum of the original input ($n = k$) and the new input ($n = 1$). We know that the Theorem holds for both of them. We have:
+
+\begin{equation}
+  ALG_{k + 1} = ALG_k + ALG_1 \leq 2OPT_k + 2 = 2(OPT_k + 1) = 2OPT_{k+1}
+\end{equation}
+
+Thus the Theorem also holds for $n = k + 1$. Therefore, it holds for all values of $n$.
+
+  In conclusion, this algorithm is $2-approximation$.
 
 \end{proof}
