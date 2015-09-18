@@ -31,7 +31,7 @@ The idea of our algorithm is that, we put all the points in to a coordinate syst
   
   If the optimal solution consists of only 1 square, then $OPT_1 = 1$. After applying our algorithm, the square can be split into at most 2 squares.
 
-  This is true because if the algorithm returns more than 2 squares, then there is a row which consists of more than 1 square. It means the margin of our points is larger than 1, then there must be more than 1 squares to fit them. It contradicts with our assumption.
+  This is true because if the algorithm returns more than 2 squares, then there is a row which consists of more than 1 square. It means the margin of our points is larger than 1, then the optimal must have more than 1 squares to fit them. It contradicts with our assumption that $OPT_1 = 1$.
   
 So $ALG_1 \leq 2 = 2OPT_1$
 
