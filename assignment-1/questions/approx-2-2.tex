@@ -2,16 +2,69 @@
 \label {a2-2}
 \subsection*{(i)}
 
-Considering the input we can define the best possible scenario for the solution as being a CNF formula where a single element picked from the first clause can be found in all other clasues. The algorithm then would remove all other clauses. This leads us to the assumption that the optimal value $ OPT $ in our case is equal to $ OPT = 1 $ 
+The best possible scenario in the presented case is similar to following:
 
-Since no assigned method is specified as to which element of the clause we should choose, we assume a random pick. This leads us to the worst possible choice scenario of a variable existing in all the clauses of the CNF and algorithm always picking the wrong one for the search.   
+$$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_4 \vee x_5) \wedge (x_1 \vee x_6 \vee x_7) $$
 
-$$ (x_1 \vee x_4  \vee x_5) \wedge (x_3 \vee x_1 \vee x_6) \wedge (x_2 \vee x_1 \vee x_7) $$
+It can be seen that in this case $ x_1 $ is present in all the clauses of the DNF therefore we can eliminate all the clauses of the equation in the first run. This gives us a following lower bound:
+$$ LB = 1 $$ 
 
-If the algorithm picked in the first clause $ x_4 $ as the variable to look for and  $ x_3 $ too look for in the second clause  it would return a value of one element in each clause until the last clause leaving us with an $ ALG = \frac{n}{3}-1 $ . Since all elements are different but they share one element in all clauses we pick 1 element in each clause meaning $ \frac{1}{3} $ of all used elements with exclusion of the first clause. 
-This would however vary greatly from the most optimal solution of $ OPT = 1 $ as described previously. 
+We deduce then:
 
-That leads to the approximation ratio of :
-$$ 1 \le \rho \le \frac{n}{3} -1 $$ 
+$$ OPT \ge 1 $$
 
+We define approximation ratio $ \rho $ as:
 
+$$ \rho = \frac{ALG}{OPT} $$
+
+Therefore we need to find $ ALG $ value so that:
+
+$$ ALG \le \rho * LB $$ 
+
+since $ LB = 1 $ we can conclude:
+
+$$ ALG \le \rho $$ 
+
+Since we don't know if duplication of elements in a clause is allowed or not we will examine two possible scenarios.\\
+
+\textbf{Duplication allowed:}\\
+
+Consider the case when:\\
+
+$$ (x_1 \vee x_2  \vee x_2) \wedge (x_1 \vee x_3 \vee x_3) \wedge (x_1 \vee x_4 \vee x_4) ... \wedge (x_1 \vee x_n \vee x_n) $$
+
+We choose in each iteration elements unique for the clause like $ x_2 , x_3 , x_4 ... x_n $. So we end up having chosen $ n $ elements, excluding the one that was common in all the clauses. That gives us :
+
+Therefore:
+
+$$ ALG = (n-1) $$ 
+$$ \rho \le (n-1) $$ \\
+
+\textbf{Duplication disallowed:}\\
+
+If duplication is not allowed as in the following DNF:
+
+$$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_2 \vee x_4) \wedge (x_1 \vee x_2 \vee x_5) ... \wedge (x_1 \vee x_2 \vee x_n) $$
+
+We can see that the algorithm chooses $ n-2 $ resulting in :
+
+$$ ALG = (n-2) $$ 
+$$ \rho \le (n-2)  $$
+
+\subsection*{(ii)}
+For the algorithm to become a 3-approximation algorithm it should be modified so that in each iteration it chooses all three elements in a clause and eliminate all the clauses in DNF that contain any of these three elements.\\
+
+\textbf{Proof}
+
+Let $ D^* $ be a subset of $ D $ that only contains clauses that don't share any variables.
+
+The optimal solution to the problem $ OPT $ contains at least one variable from each clause therefore :
+$$ OPT \ge |D^*| = LB $$ 
+
+In our algorithm after the modification, we select three variables in each clause in $ D^* $,
+because there are no clauses that share common variables with them.
+The other clauses which have common variables as any clause in $ D^* $ are deleted.
+Thus:
+$$ ALG \le 3 |D^*| = 3 * LB $$
+
+So it is a 3-approx algorithm.
