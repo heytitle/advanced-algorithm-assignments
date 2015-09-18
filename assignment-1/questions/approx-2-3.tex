@@ -41,7 +41,7 @@ Thus, the linear program is
 Let $\tau$ denote the rounding threshold such that
 \begin{align*}
     x_i = \begin{cases}
-        1, & \text{if } x_i \geq \tau \\
+        1, & \text{if} x_i \geq \tau \\
         0, & \text{otherwise}
     \end{cases}
 \end{align*}
@@ -71,10 +71,10 @@ The next step is to derive $\tau$ such that all constraints are satisfied and th
 $x^*$ to be an ideal value of any $x_i$ such that it satisfies all constraints.
 \begin{align*}
 \sum\limits_{v_{i} \in e} x_i &\geq 2 \\
-\sum\limits_{i=1}^d x^* &\geq 2 \\
-1 + \sum\limits_{i=1}^{d-1} x^* &\geq 2 \\
-(d-1) x^* &\geq 1 \\
-x^* &\geq \frac{1}{d-1} \\
+\sum\limits_{i=1}^d x_i &\geq 2 \\
+1 + \sum\limits_{i=1}^{d-1} x^i &\geq 2 \\
+(d-1) x^i &\geq 1 \\
+x_i &\geq \frac{1}{d-1} \\
 \therefore \tau &= \frac{1}{d-1}
 \end{align*}
 
@@ -85,7 +85,7 @@ Now we can derive,
 \begin{align*}
     |C| &= \sum\limits_{v_i \in C} 1 \\
         &\leq \sum\limits_{v_i \in C} (d-1)x_i \\
-        &\leq (d-1)\leq \sum\limits_{v_i \in C} x_i \\
+        &\leq (d-1) \sum\limits_{v_i \in C} x_i \\
         &\leq (d-1)W \\
         &\leq (d-1)OPT \\
 \end{align*}
