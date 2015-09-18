@@ -1,0 +1,17 @@
+\section*{AIII-1-i)}
+\label{approx-3-1-i}
+
+We assume total time $ T = \sum_{j=1}^{n} t_i $ to be the total time of all the jobs.
+Since we define large job as having time  $ t \ge \epsilon T $,
+we can deduce that if all runing jobs are large jobs, the maximal number of those jobs is
+equal to :
+$$ n_{max} = \frac{T}{\epsilon T} = \frac{1}{\epsilon} $$
+
+For each job we take into account there are two possible ways of assigning it to a machine.
+Therefore the possible ways jobs can be scheduled is:
+
+$$ 2*2* ... *2 = 2^{\frac{1}{\epsilon}} $$
+
+Since we don't distuingish between the machines, we remove the duplicates leaving the 
+total number of schedules at :
+$$ \frac{2^\frac{1}{\epsilon}}{2} = 2^{\frac{1}{\epsilon}-1} $$
