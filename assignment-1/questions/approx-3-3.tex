@@ -1,0 +1,33 @@
+\section* {AIII.3}
+\label {a3-3}
+\subsection*{(i)}
+Because we know that $ALG(G,\epsilon) \in \mathbb{N}$, so that if we can find such $\epsilon$ that the algorithm yields
+\begin{align*}
+	OPT - 1 < ALG\left(G,\epsilon \right) \leq OPT
+\end{align*}
+
+Then, we can get $OPT$ in polynomial time.\\
+
+In order to get such $\epsilon$, we will derive
+\begin{align*}
+	ALG\left(G,\epsilon\right) &> OPT - 1\\
+	&> \left( 1 - \frac{1}{OPT} \right)OPT
+\end{align*}
+%\begin{align*}
+%	ALG OPT - 1 \\
+%%	&\ge \left( 1 - \frac{1}{OPT} \right) OPT
+%	
+%\end{align*}
+Hence we can get $OPT$ if we choose $\epsilon < \frac{1}{OPT}$ and we also know that the algorithm uses $ALG(G,\epsilon)$ as a subroutine. \\ \\
+
+Therefore, there is no such FPTAS exist.
+
+\subsection*{(ii)}
+
+The proof above indeed implies that there is no PTAS such a problem because we know that a PTAS algorithm also computes a $(1 - \epsilon)$-approximation for the problem and if we choose $\epsilon > \frac{1}{OPT}$ as the proof above then, the PTAS algorithm will yield $OPT$ in polynomial time of $n$. \\
+
+Therefore there is no PTAS exist anymore.
+
+
+	
+
