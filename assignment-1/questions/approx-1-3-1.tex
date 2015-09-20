@@ -1,16 +1,15 @@
-\section*{AI-3-i)}
+\subsection*{(i)}
 \label{approx-1-3-i}
 \newtheorem{lem}[]{Lemma}
 
-Assume we have the optimal solution, which has $n$ squares
+Assume we have the optimal solution, which has $n$ squares. That is:
 \begin{align*}
     n \le LB \le OPT
 \end{align*}
 
-\begin{lem}
-    Each unit square in the grid can overlap at most 4 cells.
-Let $n_s$ be the number of square in the integer grid solution. Thus
-    \begin{align*}
-        n_s \le 4n \le 4OPT
-    \end{align*}
-\end{lem}
+Now we put our set of points into a grid with unit-size cells. Each unit square can overlap at most 4 cells in such a grid, then our optimal solution can be split into at most $4n$ squares. Therefore,
+\begin{align*}
+  ALG \leq 4n = 4.OPT
+\end{align*}
+
+So this algorithm is 4-approximation.
