@@ -1,0 +1,66 @@
+\section*{AIII-1-ii)}
+\label{approx-3-1-ii}
+
+To obtain PTAS, we classify the jobs in the schedule according to the description of the problem.
+We split them up into two sizes :
+\begin{align*}
+    \text{Job is } \begin{cases}
+        \text{Large} \text{ if } t_j \ge \epsilon T \\
+        \text{Small} \text{ if } t_j < \epsilon T \\
+    \end{cases}
+\end{align*}
+
+We now can achieve the polynomial time by arranging the small jobs into large job sized slices.
+This gives us the ability to treat all jobs equal when creating a schedule.
+We can now use a brute-force method to find the most optimal schedule for the problem.
+Resulting in the following algorithm:
+\begin{algorithm}
+  \caption{Load Balancing PTAS}
+  \label{alg:load_balancing_ptas}
+  \begin{algorithmic}
+    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+    \renewcommand{\algorithmicensure}{\textbf{Output:}}
+    \algnewcommand\algorithmicoperation{\textbf{Operation:}}
+    \algnewcommand\Operation{\item[\algorithmicoperation]}
+    \Require n-sized array of jobs $ t_j $
+    \Ensure A minimal maximum Makespan of the both machines
+    \Operation
+    \State Split jobs into large and small jobs according to the definition. 
+    \State Arrange small jobs into large job sized chunks and create a new array J containing both chunks and large jobs
+    \State Generate an array S of different schedules for the J array of jobs
+    \State Establish $ minMakespan := 0 $ and $ bestSchedule := null $
+    \State \textbf{Foreach} Schedule in S
+    \State \hspace{\algorithmicindent} Calculate $ M_1 $ and $ M_2 $ makespans on the respective machines
+    \State \hspace{\algorithmicindent} \textbf{If} $ max(M_1,M_2) < minMakespan $
+    \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} $ bestSchedule = S $ 
+    \State \hspace{\algorithmicindent} \textbf{Else}
+    \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} \textbf{Continue} \\
+    \Return $ bestSchedule $
+  \end{algorithmic}
+\end{algorithm}
+
+\textbf{Proof}\\
+To prove that the presented algorithm is indeed a PTAS we introduce a variable $ S_i $ denoting the total size of
+small jobs on a machine in an optimal schedule where $ 1 \le i \le 2 $, and a variable S being a total processing time for the small jobs in an optimal schedule.
+Because we now have small jobs arranged into identically sized chunks we can deduce a total number of jobs in a schedule:
+$$ \lceil S_1/(\epsilon T) \rceil + \lceil S_1/(\epsilon T) \rceil \ge \lfloor S_1/(\epsilon T) + S_2/(\epsilon T) \rfloor = \lfloor S/(\epsilon T) \rfloor $$ 
+
+We can now deduce that for the optimal solution, by assigning the chunks we can obtain a maximal error of:
+$$ \lceil S_i / ( \epsilon T ) \rceil \epsilon T - S_i \le (S_i / ( \epsilon T ) +1 ) \epsilon T - S_i = \epsilon T = \text{Total Error} $$
+
+From this we figure out that:
+$$ ALG \le OPT + \epsilon T \le (1+\epsilon) OPT $$
+
+Which proves that the algorithm is indeed a PTAS according to the definition.
+
+\textbf{Running Time}\\
+To analyze the running time we conclude that:
+\begin{itemize}
+\item The generation of the possible schedules runs in $ O(2^{\frac{1}{\epsilon}}) $ because there are $ 2^{\frac{1}{\epsilon}} $ possible schedules as stated in the first part of the exercise
+\item The calculation of makespan for all this schedules is similarly $ O(2^{\frac{1}{\epsilon}}) $.
+\end{itemize}
+
+This states that the algorithm runs in $ O(2^{\frac{1}{\epsilon}}) $.
+
+
+
