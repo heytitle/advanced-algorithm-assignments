@@ -13,10 +13,10 @@ We propose the algorithm as follow.
     \algnewcommand\algorithmicoperation{\textbf{Operation:}}
     \algnewcommand\Operation{\item[\algorithmicoperation]}
     \Operation
-    \State set $currentCoveringPosition = 0$
+    \State set $currentCoveringPosition = -1$
     \State QuickSortAscending($S$)
     \ForAll {Point $p$ in $P$}
-    \If {$p.x \leq currentCoveringPosition$}
+    \If {$p.x > currentCoveringPosition$}
     \State create square $s = (p.x, 1, p.x + 1, 0)$;
     \State add $s$ to $S$
     \State set $currentCoveringPosition = p.x + 1$
