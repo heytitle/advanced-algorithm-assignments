@@ -28,10 +28,11 @@ Resulting in the following algorithm:
     \State Split jobs into large and small jobs according to the definition. 
     \State Arrange small jobs into large job sized chunks and create a new array J containing both chunks and large jobs
     \State Generate an array S of different schedules for the J array of jobs
-    \State Establish $ minMakespan := 0 $ and $ bestSchedule := null $
+    \State Establish $ minMakespan := \infty $ and $ bestSchedule := null $
     \State \textbf{Foreach} Schedule in S
     \State \hspace{\algorithmicindent} Calculate $ M_1 $ and $ M_2 $ makespans on the respective machines
     \State \hspace{\algorithmicindent} \textbf{If} $ max(M_1,M_2) < minMakespan $
+    \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} $ minMakespan = max(M_1,M_2) $
     \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} $ bestSchedule = S $ 
     \State \hspace{\algorithmicindent} \textbf{Else}
     \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} \textbf{Continue} \\
