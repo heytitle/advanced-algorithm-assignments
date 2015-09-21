@@ -7,18 +7,18 @@ Let's consider this setting:
 
 \begin{itemize}
     \item 3 machines: M1, M2, M3
-    \item 7 jobs: 1, 1, 1, 2, 1, 1, 2
+    \item 7 jobs: 1, 1, 1, 1, 1, 1, 3
   \end{itemize}
 
 $Greedy Scheduling Algorithm$ will come up with this scheduling:
 
 \begin{itemize}
-\item M1: 1 2 2
+\item M1: 1 1 3
 \item M2: 1 1
 \item M3: 1 1
 \end{itemize}
 
-Thus $ALG = makespan = 1 + 2 + 2 = 5$
+Thus $ALG = makespan = 1 + 1 + 3 = 5$
 
 We know that:
 \begin{equation}
@@ -29,8 +29,8 @@ Where $Average_{load} = \frac{1}{m} \sum_{i=1}^{n} j_i = \frac{9}{3} = 3$
 
 Here we can find a solution with $makespan = 3$. That is:
 \begin{itemize}
-\item M1: 1 2
-\item M2: 1 2
+\item M1: 3
+\item M2: 1 1 1
 \item M3: 1 1 1
 \end{itemize}
 
