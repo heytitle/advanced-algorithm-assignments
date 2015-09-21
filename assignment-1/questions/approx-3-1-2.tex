@@ -67,7 +67,7 @@ If we denote
 	\item $ t_{last} $ as the running time of the last scheduled job
 \end{itemize}
 We come up with :
-$$ M = T' + t_{last} \le ( T - t_{last} )/2 + t_{last} \le T/2 + \epsilon * (T/2) \le T + \epsilon * T = (1 + \epsilon ) OPT $$
+$$ M = T' + t_{last} \le ( T - t_{last} )/2 + t_{last} \le T/2 + \epsilon (T/2) \le T + \epsilon T = (1 + \epsilon ) OPT $$
 
 It has to be noted that in a case where $ \epsilon $ is chosen so there are no small jobs in the schedule we fallback to the brute-force solution for Large Jobs, therefore the solution is always OPT for that case.
 
