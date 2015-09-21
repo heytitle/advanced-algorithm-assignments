@@ -2,11 +2,11 @@
 \label {a2-3}
 \subsection*{(i)}
 
-Suppose a $d$-hypergraph $G = (V,E)$ which every edge $e$ $\in$ $E$ incidenst to $d$ vertices in $V$. To formulate 0/1 linear programming, we introduce $X$ = \{ $x{_i}$, $x{_2}$, ... , $x{_n}$ \} which $x{_i}$ represents $v_i \in V$ in a linear programming.
+Suppose a $d$-hypergraph $G = (V,E)$ which every edge $e$ $\in$ $E$ is incident to $d$ vertices in $V$. To formulate 0/1 linear programming, we introduce $X$ = \{ $x{_i}$, $x{_2}$, ... , $x{_n}$ \} which $x{_i}$ represents $v_i \in V$ in a linear programming.
 If $x_i$ = 1, it means we pick $v_i$ to the set of double vertex cover, $C$ $\subset$ $V$, and otherwise $x_i$ = 0. For this solution, we want to find a minimum double vertex cover which requires at least 2 vertices from each edge are in $C$. Then, we can derive a constraint for 0/1 linear programming\\.
 
 \begin{center}
-$\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 for all $e \in E$ ;
+$\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 for all $e \in E$ ; at least 2 vertices are selected.
 \end{center}
 
 
@@ -17,7 +17,7 @@ Thus, we then formulate the linear programming.
 	tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \kill \\ 
 	\> \> Minimize \>\>\>\>\>$\sum\limits_{x=1}^n x_i$  \\ \\
 	\> \> Subject to \\
-	\> \> \> \> $\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 \> \> \> for all $e \in E$ ; at least 2 vertices are selected.\\
+	\> \> \> \> $\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 \> \> \> for all $e \in E$\\
 	\> \> \> \> $x_i$ = \{0,1\} \> \> \> for all $x_i \in X$ \\
 \end{tabbing}
 
@@ -34,14 +34,14 @@ Thus, the linear program is
 	tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \= tabs \kill \\ 
 	\> \> Minimize \>\>\>\>\>$\sum\limits_{x=1}^n x_i$  \\ \\
 	\> \> Subject to \\
-	\> \> \> \> $\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 \> \> \> for all $e \in E$ ; at least 2 vertices are selected.\\
+	\> \> \> \> $\sum\limits_{v_{i} \in e} x_i$ $\geq$ 2 \> \> \> for all $e \in E$ \\
 	\> \> \> \> $ 0 \leq x_i \leq 1 $ \> \> \> for all $x_i \in X$ \\
 \end{tabbing}
 
 Let $\tau$ denote the rounding threshold such that
 \begin{align*}
     x_i = \begin{cases}
-        1, & \text{if} x_i \geq \tau \\
+        1, & \text{if} \, x_i \geq \tau \\
         0, & \text{otherwise}
     \end{cases}
 \end{align*}

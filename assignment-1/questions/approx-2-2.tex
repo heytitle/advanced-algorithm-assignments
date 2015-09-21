@@ -23,7 +23,7 @@ Since we don't know if duplication of elements in a clause is allowed or not we 
 
 Consider the case when:\\
 
-$$ (x_1 \vee x_2  \vee x_2) \wedge (x_1 \vee x_3 \vee x_3) \wedge (x_1 \vee x_4 \vee x_4) ... \wedge (x_1 \vee x_n \vee x_n) $$
+$$ (x_1 \vee x_2  \vee x_2) \wedge (x_1 \vee x_3 \vee x_3) \wedge (x_1 \vee x_4 \vee x_4) \wedge ... \wedge (x_1 \vee x_n \vee x_n) $$
 
 We choose in each iteration elements unique for the clause like $ x_2 , x_3 , x_4 ... x_n $. So we end up having chosen $ n $ elements, excluding the one that was common in all the clauses. That gives us:
 
@@ -36,7 +36,7 @@ We choose in each iteration elements unique for the clause like $ x_2 , x_3 , x_
 
 If duplication is not allowed as in the following CNF:
 
-$$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_2 \vee x_4) \wedge (x_1 \vee x_2 \vee x_5) ... \wedge (x_1 \vee x_2 \vee x_n) $$
+$$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_2 \vee x_4) \wedge (x_1 \vee x_2 \vee x_5) \wedge ... \wedge (x_1 \vee x_2 \vee x_n) $$
 
 We can see that the algorithm chooses $ n-2 $ resulting in :
 \begin{align*}
