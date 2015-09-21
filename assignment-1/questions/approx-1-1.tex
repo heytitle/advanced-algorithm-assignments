@@ -22,10 +22,11 @@ Thus $ALG = makespan = 1 + 1 + 3 = 5$
 
 We know that:
 \begin{equation}
- OPT \geq Average_{load} 
+ OPT \geq max(Average_{load}, max(tj))
 \end{equation}
 
-Where $Average_{load} = \frac{1}{m} \sum_{i=1}^{n} j_i = \frac{9}{3} = 3$
+Where $$Average_{load} = \frac{1}{m} \sum_{i=1}^{n} j_i = \frac{9}{3} = 3$$
+And $$max(tj) = 3$$
 
 Here we can find a solution with $makespan = 3$. That is:
 \begin{itemize}
