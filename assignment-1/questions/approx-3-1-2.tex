@@ -1,67 +1,77 @@
 \section*{AIII-1-ii)}
 \label{approx-3-1-ii}
 
-To obtain PTAS, we classify the jobs in the schedule according to the description of the problem.
+Let's denote a total sum of the running time of all jobs as $ m_{all} $ and running time of the longest job as $ m_{max} $.
+From the description of the problem we can deduce a lowerbound.
+\begin{itemize}
+	\item $ LB = \frac{1}{2} m_{all} $ when all jobs can be evenly splitted into two machines.
+	\item $ LB = m_{max} $ when the longest running job is longer than all other jobs together, we schedule it on one
+		machine leaving all the other jobs on the second.
+\end{itemize}
+
+To obtain PTAS, first we classify the jobs in the schedule according to the lowerbound
 We split them up into two sizes :
 \begin{align*}
     \text{Job is } \begin{cases}
-        \text{Large} \text{ if } t_j \ge \epsilon T \\
-        \text{Small} \text{ if } t_j < \epsilon T \\
+        \text{Large} \text{ if } t_j \ge \epsilon LB \\
+        \text{Small} \text{ if } t_j < \epsilon LB \\
     \end{cases}
 \end{align*}
 
-We now can achieve the polynomial time by arranging the small jobs into large job sized slices.
-This gives us the ability to treat all jobs equal when creating a schedule.
-We can now use a brute-force method to find the most optimal schedule for the problem.
-Resulting in the following algorithm:
-\begin{algorithm}
+Furthermore we can solve the problem for the large jobs by taking all of them and finding a solution using a brute-force method
+(first generate all possible schedules and then find the makespan for all of them, choose the one with smallest).
+This leaves us with small jobs to schedule. We can do this using a greedy approach. Simply we take all the small jobs and for each
+of them we assign it to the machine with the lowest load.
+
+\begin{algorithm}[H]
   \caption{Load Balancing PTAS}
   \label{alg:load_balancing_ptas}
   \begin{algorithmic}
+    \Require Set of j jobs with running time $t_j$
+    \Ensure Scheduling scenario with a lowest maximum running time of the two machine 
     \renewcommand{\algorithmicrequire}{\textbf{Input:}}
     \renewcommand{\algorithmicensure}{\textbf{Output:}}
     \algnewcommand\algorithmicoperation{\textbf{Operation:}}
     \algnewcommand\Operation{\item[\algorithmicoperation]}
-    \Require n-sized array of jobs $ t_j $
-    \Ensure A minimal maximum Makespan of the both machines
     \Operation
-    \State Split jobs into large and small jobs according to the definition. 
-    \State Arrange small jobs into large job sized chunks and create a new array J containing both chunks and large jobs
-    \State Generate an array S of different schedules for the J array of jobs
-    \State Establish $ minMakespan := \infty $ and $ bestSchedule := null $
-    \State \textbf{Foreach} Schedule in S
-    \State \hspace{\algorithmicindent} Calculate $ M_1 $ and $ M_2 $ makespans on the respective machines
-    \State \hspace{\algorithmicindent} \textbf{If} $ max(M_1,M_2) < minMakespan $
-    \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} $ minMakespan = max(M_1,M_2) $
-    \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} $ bestSchedule = S $ 
-    \State \hspace{\algorithmicindent} \textbf{Else}
-    \State \hspace{\algorithmicindent} \hspace{\algorithmicindent} \textbf{Continue} \\
-    \Return $ bestSchedule $
+    \State Calculate the lower bound $ LB = max(\frac{1}{2}m_{all}, m_{max}) $ .
+    \State Split the input into set of small jobs $ S $ and a set of large jobs $ L $  based on the definition.
+    \State Generate a list of all possible scheduling scenarios for large jobs $ LargeSchedules $.
+    \State Establish $ MinMakeSpan := \infty $ and $ BestSchedule:= null $
+    \ForAll {Scenario $Scen$ in $ LargeSchedules $}
+    \State Calculate minimal makespan of the two machines $ l_{min} $
+    \If {$ l_{min} \le MinMakeSpan $}
+    \State $ MinMakeSpan := s_{min} $ and $ BestSchedule := Scen $
+    \EndIf
+    \EndFor
+    \ForAll {Small Job $s$ in $S$}
+    \State Schedule $ s $ to the machine with the lower current load
+    \EndFor\\
+    \Return BestSchedule
   \end{algorithmic}
 \end{algorithm}
 
-\textbf{Proof}\\
-To prove that the presented algorithm is indeed a PTAS we introduce a variable $ S_i $ denoting the total size of
-small jobs on a machine in an optimal schedule where $ 1 \le i \le 2 $, and a variable S being a total processing time for the small jobs in an optimal schedule.
-Because we now have small jobs arranged into identically sized chunks we can deduce a total number of jobs in a schedule:
-$$ \lceil S_1/(\epsilon T) \rceil + \lceil S_1/(\epsilon T) \rceil \ge \lfloor S_1/(\epsilon T) + S_2/(\epsilon T) \rfloor = \lfloor S/(\epsilon T) \rfloor $$ 
+\textbf{Proof}
 
-We can now deduce that for the optimal solution, by assigning the chunks we can obtain a maximal error of:
-$$ \lceil S_i / ( \epsilon T ) \rceil \epsilon T - S_i \le (S_i / ( \epsilon T ) +1 ) \epsilon T - S_i = \epsilon T = \text{Total Error} $$
+To prove that our algorithm is indeed a PTAS we need to show the following :
+$$ ALG \le (1 + \epsilon ) OPT $$ 
 
-From this we figure out that:
-$$ ALG \le OPT + \epsilon T \le (1+\epsilon) OPT $$
+Since part one of the algorithm will always return an optimal solution (it checks all 
+the possible solutions) we can skip it and concentrate instead on the greed solution
+to scheduling the small jobs.
 
-Which proves that the algorithm is indeed a PTAS according to the definition.
-
-\textbf{Running Time}\\
-To analyze the running time we conclude that:
+If we denote 
 \begin{itemize}
-\item The generation of the possible schedules runs in $ O(2^{\frac{1}{\epsilon}}) $ because there are $ 2^{\frac{1}{\epsilon}} $ possible schedules as stated in the first part of the exercise
-\item The calculation of makespan for all this schedules is similarly $ O(2^{\frac{1}{\epsilon}}) $.
+	\item $ M $ as a makespan generated by our solution
+	\item $ T $ total running time of all jobs.
+	\item $ T' $ as the running time in our solution before assigning the last job
+	\item $ t_{last} $ as the running time of the last scheduled job
 \end{itemize}
+We come up with :
+$$ M = T' + t_{last} \le ( T - t_{last} )/2 + t_{last} \le T/2 + \epsilon * (T/2) \le LB + \epsilon * LB = (1 + \epsilon ) OPT $$
 
-This states that the algorithm runs in $ O(2^{\frac{1}{\epsilon}}) $.
+It has to be noted that in a case where $ \epsilon $ is chosen so there are no small jobs in the schedule we fallback to the brute-force solution for Large Jobs, therefore the solution is always OPT for that case.
 
-
+\textbf{Running Time}
+Since there can be only at most $ 2^{\frac{1}{\epsilon}-1} $ possible large jobs, then the brute-force part of the algorithm will have a running time of $ O(2^{\frac{1}{\epsilon}-1}) $. The greedy scheduling of the large jobs is faster with linear time $ O(n) $ for $ n $ jobs. Leaving a total running time - $ O(2^{\frac{1}{\epsilon}-1} + n) $.
 
