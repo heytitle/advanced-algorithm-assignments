@@ -6,7 +6,7 @@ The best possible scenario in the presented case is similar to following:
 
 $$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_4 \vee x_5) \wedge (x_1 \vee x_6 \vee x_7) $$
 
-It can be seen that in this case $ x_1 $ is present in all the clauses of the DNF therefore we can eliminate all the clauses of the equation in the first run. This gives us a following lower bound:
+It can be seen that in this case $ x_1 $ is present in all the clauses of the CNF therefore we can eliminate all the clauses of the equation in the first run. This gives us a following lower bound:
 $$ LB = 1 $$ 
 
 We deduce then:
@@ -34,7 +34,7 @@ We choose in each iteration elements unique for the clause like $ x_2 , x_3 , x_
 
 \textbf{Duplication disallowed:}\\
 
-If duplication is not allowed as in the following DNF:
+If duplication is not allowed as in the following CNF:
 
 $$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_2 \vee x_4) \wedge (x_1 \vee x_2 \vee x_5) ... \wedge (x_1 \vee x_2 \vee x_n) $$
 
@@ -45,7 +45,7 @@ We can see that the algorithm chooses $ n-2 $ resulting in :
 \end{align*}
 
 \subsection*{(ii)}
-For the algorithm to become a 3-approximation algorithm it should be modified so that in each iteration it chooses all three elements in a clause and eliminate all the clauses in DNF that contain any of these three elements.\\
+For the algorithm to become a 3-approximation algorithm it should be modified so that in each iteration it chooses all three elements in a clause and eliminate all the clauses in CNF that contain any of these three elements.\\
 
 \textbf{Proof}
 
