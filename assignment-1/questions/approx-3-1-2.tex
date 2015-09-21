@@ -2,12 +2,7 @@
 \label{approx-3-1-ii}
 
 Let's denote a total sum of the running time of all jobs as $ T $ and running time of the longest job as $ t_{max} $.
-From the description of the problem we can deduce a lowerbound.
-\begin{itemize}
-	\item $ LB = \frac{1}{2} T $ when all jobs can be evenly splitted into two machines.
-	\item $ LB = t_{max} $ when the longest running job is longer than all other jobs together, we schedule it on one
-		machine leaving all the other jobs on the second.
-\end{itemize}
+So $OPT \geq max(\frac{T}{2}, t_{max})$, then $LB = max(\frac{T}{2}, t_{max})$.
 
 To obtain PTAS, first we classify the jobs in the schedule according to problem description
 We split them up into two sizes :
@@ -52,11 +47,11 @@ of them we assign it to the machine with the lowest load.
 
 \textbf{Proof}
 
-To prove that our algorithm is indeed a PTAS we need to show the following :
+To prove that our algorithm is indeed a PTAS we need to show that it runs in polynomial time, and the following statement is true :
 $$ ALG \le (1 + \epsilon ) OPT $$ 
 
 Since part one of the algorithm will always return an optimal solution (it checks all 
-the possible solutions) we can skip it and concentrate instead on the greed solution
+the possible solutions) we can skip it and concentrate instead on the greedy solution
 to scheduling the small jobs.
 
 If we denote 
@@ -67,10 +62,10 @@ If we denote
 	\item $ t_{last} $ as the running time of the last scheduled job
 \end{itemize}
 We come up with :
-$$ M = T' + t_{last} \le ( T - t_{last} )/2 + t_{last} \le T/2 + \epsilon (T/2) \le T + \epsilon T = (1 + \epsilon ) OPT $$
+$$ M = T' + t_{last} \le \frac{T - t_{last}}{2} + t_{last} \le \frac{T}{2} + \frac{\epsilon T}{2} \le (1 + \epsilon)\frac{T}{2} \le (1 + \epsilon )LB \le (1 + \epsilon)OPT$$
 
-It has to be noted that in a case where $ \epsilon $ is chosen so there are no small jobs in the schedule we fallback to the brute-force solution for Large Jobs, therefore the solution is always OPT for that case.
+When $\epsilon$ is small enough, there are no small jobs in the schedule, we fallback to the brute-force solution for Large Jobs, therefore the solution is always OPT for that case. Then the approximation ratio still holds as $(1 + \epsilon)$ where $\epsilon$ is very small ($\epsilon \to 0$).
 
 \textbf{Running Time}
-Since there can be only at most $ 2^{\frac{1}{\epsilon}-1} $ possible large jobs, then the brute-force part of the algorithm will have a running time of $ O(2^{\frac{1}{\epsilon}-1}) $. The greedy scheduling of the large jobs is faster with linear time $ O(n) $ for $ n $ jobs. Leaving a total running time - $ O(2^{\frac{1}{\epsilon}-1} + n) $.
+Since there can be only at most $ 2^{\frac{1}{\epsilon}-1} $ possible large jobs, then the brute-force part of the algorithm will have a running time of $ O(2^{\frac{1}{\epsilon}-1}) $. The greedy scheduling of the large jobs is faster with linear time $ O(n) $ for $ n $ jobs. Leaving a total running time - $ O(2^{\frac{1}{\epsilon}-1} + n) $, which is polynomial in term of $n$. So this algorithm satisfies the condition of a PTAS.
 
