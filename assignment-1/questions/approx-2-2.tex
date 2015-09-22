@@ -16,7 +16,7 @@ This result is not very interesting because $n$ is also the upper bound of the s
 
 Assume that such duplication is not allowed. Then in the worst case, $OPT = 1$ as we explained before, while the algorithm can pick at most $n-2$ variables. It is because if all of $n$ variables are used, then the last 2 ones are in some DNF claus(es) which are covered by the previous variables. If not all of them are used, then $ALG < n-2$. \\
 
-The case when $ALG = 2$ is as follow, we have $n$ variables and 2 common ones in all clauses.
+The case when $ALG = n - 2$ is as follow, we have $n$ variables and 2 common ones in all clauses.
 $$ (x_1 \vee x_2  \vee x_3) \wedge (x_1 \vee x_2 \vee x_4) \wedge (x_1 \vee x_2 \vee x_5) \wedge ... \wedge (x_1 \vee x_2 \vee x_n) $$
 There are 2 common variables and $n-2$ other different variables distributed among the clauses. In the worst case, the algorithm returns $ALG = n-2 $. Then the approximation ratio is
 
