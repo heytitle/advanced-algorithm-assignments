@@ -1,6 +1,6 @@
 \subsection*{(ii)}
 \label{a-1-3-2}
-We propose the algorithm as follow.
+We propose algorithm \ref{alg:row_minimum}.
 
 \begin{algorithm}
   \caption{Finding minimum row square cover}
@@ -13,8 +13,8 @@ We propose the algorithm as follow.
     \algnewcommand\algorithmicoperation{\textbf{Operation:}}
     \algnewcommand\Operation{\item[\algorithmicoperation]}
     \Operation
-    \State set $currentCoveringPosition = -1$
     \State QuickSortAscending($S$)
+    \State set $currentCoveringPosition = p_1.x - 1$
     \ForAll {Point $p$ in $P$}
     \If {$p.x > currentCoveringPosition$}
     \State create square $s = (p.x, 1, p.x + 1, 0)$;
