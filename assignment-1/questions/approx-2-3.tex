@@ -70,15 +70,21 @@ Let $\tau$ denote the rounding threshold such that
 The next step is to derive $\tau$ such that all constraints are satisfied and the algorithm always return a valid solution. Let denote
 $x^*$ to be an ideal value of any $x_i$ such that it satisfies all constraints.
 \begin{align*}
-\sum\limits_{v_{i} \in e} x_i &\geq 2 \\
+\sum\limits_{x_{i} \in e} x_i &\geq 2 \, \forall e \in E \\
 \sum\limits_{i=1}^d x_i &\geq 2 \\
-1 + \sum\limits_{i=1}^{d-1} x^i &\geq 2 \\
-(d-1) x^i &\geq 1 \\
+x_1 + \sum\limits_{i=1}^{d-1} &\geq 2 \\
+\end{align*}
+
+We would like to find a threshold $\tau$ that is small enough so that at least 2 vertices are selected. The extreme case is when $x_1 = 1$, then we have:
+\begin{align*}
+1 + \sum\limits_{i=1}^{d-1} x_i &\geq 2 \\
+(d-1) x_i &\geq 1 \\
 x_i &\geq \frac{1}{d-1} \\
 \therefore \tau &= \frac{1}{d-1}
 \end{align*}
 
-Let denote $W$ denote the value of an optimal to the relaxed linear program and $OPT$ denote the minium number of double vertex cover.
+
+Let $W$ denote the value of an optimal to the relaxed linear program and $OPT$ denote the minimum number of double vertex cover.
 Then $OPT \geq W$.
 
 Now we can derive,

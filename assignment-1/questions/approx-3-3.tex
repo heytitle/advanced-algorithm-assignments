@@ -1,6 +1,14 @@
 \section* {AIII.3}
 \label {a3-3}
 \subsection*{(i)}
+Suppose that we have such $ALG(G,\epsilon)$ that can return a $(1 - \epsilon )-approximation$ solution to the problem. We can define an FPTAS as follow:
+\begin{itemize}
+	\item Set $\epsilon$ to some value
+	\item Return $ALG(G,\epsilon)$
+\end{itemize}
+
+The above algorithm runs in polynomial time. \\
+
 Because we know that $ALG(G,\epsilon) \in \mathbb{N}$, so that if we can find such $\epsilon$ that the algorithm yields
 \begin{align*}
 	OPT - 1 < ALG\left(G,\epsilon \right) \leq OPT
@@ -8,7 +16,7 @@ Because we know that $ALG(G,\epsilon) \in \mathbb{N}$, so that if we can find su
 
 Then, we can get $OPT$ in polynomial time.\\
 
-In order to get such $\epsilon$, we will derive
+In order to get such $\epsilon$, we need:
 \begin{align*}
 	ALG\left(G,\epsilon\right) &> OPT - 1\\
 	&> \left( 1 - \frac{1}{OPT} \right)OPT
@@ -18,15 +26,22 @@ In order to get such $\epsilon$, we will derive
 %%	&\ge \left( 1 - \frac{1}{OPT} \right) OPT
 %	
 %\end{align*}
-Hence we can get $OPT$ if we choose $\epsilon < \frac{1}{OPT}$ and we also know that the algorithm uses $ALG(G,\epsilon)$ as a subroutine. \\ \\
 
-Therefore, there is no such FPTAS exist.
+This holds when $\epsilon < \frac{1}{OPT}$.\\
+
+Indeed, we do not know the exact value of $OPT$. But the above property implies that there exists some values of $\epsilon$ that can help $ALG(G,\epsilon)$ return $OPT$. Because our algorithm uses $ALG(G,\epsilon)$ as the main routine, so it also runs in polynomial time.
+
+Now we have an algorithm that can return the optimal solution in polynomial time. Then our problem is not NP-Hard anymore. This contradicts with the definition.
+
+Therefore, there is no FPTAS for the problem.
 
 \subsection*{(ii)}
 
-The proof above indeed implies that there is no PTAS such a problem because we know that a PTAS algorithm also computes a $(1 - \epsilon)$-approximation for the problem and if we choose $\epsilon < \frac{1}{OPT}$ as the proof above then, the PTAS algorithm will yield $OPT$ in polynomial time of $n$. \\
+The proof above indeed implies that there exists some values of $\epsilon$ that can help any $(1-\epsilon)-approx$ algorithm return $OPT$.\\
 
-Therefore there is no PTAS exist anymore.
+Therefore, if there exists a PTAS for this problem, it also returns $OPT$ with such $\epsilon$ because PTAS also produces $(1-\epsilon)-approx$ solutions. This conflicts with the NP-Hard property of the problem as being explained above.\\
+
+Therefore there is no PTAS for the problem.
 
 
 	

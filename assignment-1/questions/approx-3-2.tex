@@ -49,7 +49,9 @@ We can simplify the range of $d^*$ to
 
 Hence, the error of $d^*$  is $2\,\sqrt[]{2}$ at most.
 
-Therefore,
+The rounded integers are indeed the multiple of $\Delta$. Thus the maximum error of a single length is $2\Delta\sqrt{2}$. \\
+
+Here we have $n$ lengths in the path. Therefore, the total error is:
 
 % derive delta
 \begin{align*}
@@ -59,7 +61,7 @@ Therefore,
 
 \subsection*{(ii)}
 
-Let $P$ and $P^*$ denote set of edges from the optimal solution and the PTAS algorithm respectively and we know that $length^*(T) \geq length^*(T^*)$, then we have
+Let $P$ and $P^*$ denote set of edges from the optimal solution and the PTAS algorithm respectively and we know that $length^*(P) \geq length^*(P^*)$, then we have
 \begin{align*}
 	\sum_{p_{i},p_{j} \in P^*}{d^*_{ij}} \leq \sum_{p_{i},p_{j} \in P}{d^*_{ij}}
 \end{align*}
@@ -67,13 +69,15 @@ Let $P$ and $P^*$ denote set of edges from the optimal solution and the PTAS alg
 Thus, we can derive
 
 \begin{align*}
-	length(T^*) &= \sum_{p_{i},p_{j} \in P^*}{d_{ij}} \\
+	length(P^*) &= \sum_{p_{i},p_{j} \in P^*}{d_{ij}} \\
 	&\leq \sum_{p_{i},p_{j} \in  P^*}{\Delta(d^*_{ij}+\sqrt[]{2})}  \\
 	&\leq \Delta \sum_{p_{i},p_{j} \in  P^*}{(d^*_{ij}+\sqrt[]{2})} \\
-    &\leq \Delta \sum_{p_{i},p_{j} \in  P}{(d^*_{ij}+\sqrt[]{2})} \\
-    &\leq \Delta \sum_{p_{i},p_{j} \in  P}{(\frac{d_{ij}}{\Delta}+2\,\sqrt[]{2})} \\
-    &\leq \sum_{p_{i},p_{j} \in  P}{d_{ij}} + \Delta\sum_{p_{i},p_{j} \in  P}{2\,\sqrt[]{2}} \\
-    &\leq length\left(T\right) + \Delta2|P|\,\sqrt[]{2} \\
+	&\leq \Delta ( \sum_{p_{i},p_{j} \in  P^*}{d^*_{ij}}+|P^*|\,\sqrt[]{2}) \\
+    &\leq \Delta ( \sum_{p_{i},p_{j} \in  P}{d^*_{ij}+|P^*|\,\sqrt[]{2})} \\
+    &\leq \Delta ( \sum_{p_{i},p_{j} \in  P}{( \frac{ d_{ij} }{ \Delta} + \sqrt{2} } ) + n\,\sqrt{2} ) \\
+    &\leq \Delta ( \sum_{p_{i},p_{j} \in  P}{\frac{d_{ij}}{\Delta}+2n\,\sqrt[]{2})} \\
+    &\leq \sum_{p_{i},p_{j} \in  P}{d_{ij}} + \Delta 2 n \,\sqrt[]{2} \\
+    &\leq length\left(P\right) + \Delta2n\,\sqrt[]{2} \\
     &\leq OPT + \left( \frac{\varepsilon OPT}{2n\,\sqrt[]{2}} \right) 2n\,\sqrt[]{2} \\
     &\leq (1 + \epsilon )OPT
 \end{align*}
