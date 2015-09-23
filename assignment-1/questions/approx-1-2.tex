@@ -15,10 +15,10 @@ Thus $T_i^*$, which represents makespan of the assignment, equals to
 T_i^* = T^{\prime}_{i^*} + t_j^*
 \end{align*}
 
-Because $T^{\prime}_{i^*}$ is the minimum load among all machines, so that we can derive
+Because $T^{\prime}_{i^*}$ is the minimum load among all machines, it is less than the average of machine loads (excluding $t^*_j$).
 
 \begin{align*}
-T^{\prime}_{i^*} \le \frac{1}{m}\sum\limits_{i=1}^m T^{\prime}_i = \sum\limits_{j=1}^{j^*} t_j \le \frac{1}{m} \bigg[ \sum\limits_{j=1}^n t_j - t_j^*  \bigg] \le LB
+T^{\prime}_{i^*} \le \frac{1}{m} \bigg[ \sum\limits_{j=1}^n t_j - t_j^*  \bigg] 
 \end{align*}
 
 Then we can derive
