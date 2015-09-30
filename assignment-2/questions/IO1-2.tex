@@ -78,3 +78,13 @@ Next, we can simply derive the IO's complexity of the algorithm.
 \end{align*}
 
 Therefore the IO's complexity of the algorithm is $O(t^2/B)$.
+
+\subsection*{(iv)}
+
+Claim. The algorithm from (iii) has better spatial locality.
+
+To prove the claim, as we can see from (i), the algorithm does not use blocks of $Y$ effectively. When it fetches a block of $Y$, it uses only one variable and move on. In contrast, the algorithm from (iii) can use all variables in a block. Because all variables that it needs for execution sub-problem are in the main memory already.
+\\\\
+Claim : The algorithm from (iii) has better temporal locality. 
+
+To prove the claim, assume $B_0$ is the first block of $Y$. In (i), the algorithm will need the block again when the algorithm finishes $m$ iterations while the algorithm from (iii) will need the block after $m/2$ iterations which is 2 time shorter than (i).
