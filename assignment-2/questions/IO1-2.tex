@@ -1,0 +1,80 @@
+\section*{IO.I-2}
+\subsection*{(i)}
+Let $T(n)$ denote IO's of the problem and $T_x$, $T_y$ and $T_z$ denote IO's of matrix $X$, $Y$ and $T_z$ respectively.
+For each cell in $Z$, we need
+\begin{align*}
+	T_x &\leq \frac{\sqrt{n}+2(B-1)}{B}\\
+	T_y &\leq \sqrt{n} \\
+	T_z &= 1
+\end{align*}
+Then, the total IO's we need for computing a cell is :
+$$\frac{\sqrt{n}+2}{B} + \sqrt{n} + 1$$
+Therefore, the total IO's that we need to compute the product $Z=XY$ :
+\begin{align*}
+	T(n) &\leq ( \frac{\sqrt{n}+2(B-1)}{B} + \sqrt{n} + 1	)n\\
+	&\leq \frac{n\sqrt{n}+2n(B-1)}{B} + n\sqrt{n} + n \\
+	&= O(n\sqrt{n})
+\end{align*}
+
+\subsection*{(ii)}
+If $Y$ is stored in $column-major$ order. For each cell, we will use $$T_y=\frac{\sqrt{n}+2(B-1)}{B}$$.
+Therefore, the total IO's is
+\begin{align*}
+	T(n) &\leq ( 2\frac{\sqrt{n}+2(B-1)}{B} + 1	)n\\
+	&\leq \frac{2n\sqrt{n}+4n(B-1)}{B} + n \\
+	&= O(\frac{n\sqrt{n}}{B})
+\end{align*}
+
+\subsection*{(iii)}
+
+% Image of X and Y how to find memory needed.
+
+In order to compute sub-problem, all variables that we have in sub-problem should fit into main memory. 
+
+Let $M_x$, $M_y$ and $M_z$ denote memory space that is required by $X$, $Y$ and $Z$ when computing a sub-problem
+
+For each sub problem, we need
+\begin{align*}
+	M_x &= t(2t + 2(B-1)) \\
+	M_y &= 2t(t+2(B-1))\\
+	M_z &= t(t+2(B-1))
+\end{align*}
+Let $M$ denote the total memory we have. Then, we find IO's recursive base case which happens when all variables in sub-problem can fit into main memory.
+\begin{align*}
+M_x + M_y + M_z &\leq M \\
+5n^2 + 6(B-1)n &\leq M
+\end{align*}
+Thus, we can formulate recurrence IO's complexity function of this algorithm.
+\begin{align*}
+	T(t) = \begin{cases}
+	    \frac{5t^2 + 6(B-1)t}{B},& \text{if } 5t^2 + 6(B-1)t \leq M\\
+	    4T(\frac{t}{2}),              & \text{otherwise}
+	\end{cases}
+\end{align*}
+Hence, we have a general form of the function where $k$ is a depth of the recursive call.
+\begin{align*}
+	T(t) = 4^{k}T(\frac{t}{2^{k}})
+\end{align*}
+We know that if $\frac{n}{2^{k}} = 5n^2 + 6(B-1)n$ we will reach the base case. Then, we can find $k$.
+\begin{align*}
+	\frac{t}{2^k} &= 5t^2 + 6(B-1)t \\
+	\frac{1}{2^k	} &= 5t + 6(B-1) \\
+	2^k &= \frac{1}{5t + 6(B-1)} \\
+	k\log2 &= \frac{1}{5t + 6(B-1)} \\
+	k &= \frac{1}{5t + 6(B-1)}
+\end{align*}
+
+Before we derive $T(t)$, we will denote $A$ as
+$$\log_2 \frac{1}{5t + 6(B-1)}$$
+
+Next, we can simply derive the IO's complexity of the algorithm.
+\begin{align*}
+	T(t) &\leq 4^{k}T(\frac{t}{2^{k}}) \\
+	&\leq 4^{log_2 A}T\Big(\frac{t}{2^{log_2 A}}\Big) \\
+	&\leq A^2T(\frac{t}{A}) \\
+	&\leq A^2\Big( \frac{5\frac{t}{A}^2}{B} + \frac{6(B-1)\frac{t}{A}}{B} \Big) \\
+	&\leq \frac{5t^2}{B} + \frac{6(B-1)t}{AB} \\
+	&= O(\frac{t^2}{B})
+\end{align*}
+
+Therefore the IO's complexity of the algorithm is $O(t^2/B)$.
