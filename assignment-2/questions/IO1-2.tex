@@ -1,6 +1,6 @@
 \section*{IO.I-2}
 \subsection*{(i)}
-Let $T(n)$ denote IO's of the problem and $T_x$, $T_y$ and $T_z$ denote IO's of matrix $X$, $Y$ and $T_z$ respectively.
+Let $T(n)$ denote IO's of the problem and $T_x$, $T_y$ and $T_z$ denote IO's of matrix $X$, $Y$ and $Z$ respectively.
 For each cell in $Z$, we need
 \begin{align*}
 	T_x &\leq \frac{\sqrt{n}+2(B-1)}{B}\\
@@ -8,7 +8,7 @@ For each cell in $Z$, we need
 	T_z &= 1
 \end{align*}
 Then, the total IO's we need for computing a cell is :
-$$\frac{\sqrt{n}+2}{B} + \sqrt{n} + 1$$
+$$\frac{\sqrt{n}+2(B-1)}{B} + \sqrt{n} + 1$$
 Therefore, the total IO's that we need to compute the product $Z=XY$ :
 \begin{align*}
 	T(n) &\leq ( \frac{\sqrt{n}+2(B-1)}{B} + \sqrt{n} + 1	)n\\
@@ -60,8 +60,8 @@ We know that if $\frac{n}{2^{k}} = 5n^2 + 6(B-1)n$ we will reach the base case. 
 	\frac{t}{2^k} &= 5t^2 + 6(B-1)t \\
 	\frac{1}{2^k	} &= 5t + 6(B-1) \\
 	2^k &= \frac{1}{5t + 6(B-1)} \\
-	k\log2 &= \frac{1}{5t + 6(B-1)} \\
-	k &= \frac{1}{5t + 6(B-1)}
+	k\log2 &= log\frac{1}{5t + 6(B-1)} \\
+	k &= log_2 \frac{1}{5t + 6(B-1)}
 \end{align*}
 
 Before we derive $T(t)$, we will denote $A$ as
