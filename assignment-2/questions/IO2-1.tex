@@ -1,0 +1,14 @@
+\section*{IO.II-1}
+Let $A = n\sqrt{n} / (M B)$, then the optimal policy performs $cA$ I/Os.\\
+
+Suppose we perform the algorithm on a machine with $M' = M / 2$ memory. Then the optimal policy definitely performs $n\sqrt{n} / (\frac{M}{2} B) = 2cA$ I/Os. \\
+
+According to theorem $5.3$ in the course notes, the LRU will perform the following number of I/Os when it is given a memory of $M$, while the optimal is given a memory $M' = M / 2 < M$:
+
+$$LRU(M) \leq \frac{M}{M - M' + B} MIN(M')$$ \\
+$$= \frac{M}{\frac{M}{2} + B} MIN(M')$$ \\ 
+$$= \frac{2M}{M + 2B}2c\frac{n\sqrt{n}}{MB}$$ \\
+$$= 4c\frac{n\sqrt{n}}{(M + 2B)B}$$ \\
+$$\leq 4c\frac{n\sqrt{n}}{MB} = 4cA$$ \\ 
+
+Let $c' = 4cA$, then the LRU need at most $c'A$ I/Os.

@@ -1,14 +1,14 @@
 \section*{IO.1-3}
 \subsection*{(i)}
-The worst case of a binary search is when each step of comparison, we need to do an I/O to load the next center until the 2 consecutive centers are in the same block, which means the remaining array has to fit in the memory. Suppose that after $k$ steps of binary searching, we reach that state, then:
+The worst case of a binary search is when each step of comparison, we need to do an I/O to load the next center until the 2 consecutive centers are in the same block, which means the remaining array has to fit in 1 block. Suppose that after $k$ steps of binary searching, we reach that state, then:
 
-$$2 \frac{n}{2^k} \leq M \leftrightarrow \frac{n}{2^k} \leq \frac{M}{2}$$
+$$2 \frac{n}{2^k} \leq B \iff \frac{n}{2^k} \leq \frac{B}{2}$$
 
 Then,
 
-$$k \geq log_2 \frac{2n}{M} $$
+$$k \geq log_2 \frac{2n}{B} $$
 
-This means we have to do $log_2 \frac{2n}{M}$ I/Os before everything is inside the memory.
+This means we have to do $log_2 \frac{2n}{B}$ I/Os before everything is inside the memory.
 
 \subsection*{(ii)}
 To avoid the case that we perform an I/O everytime we make a comparison, we can organize the blocks differently. Now we group all of the sorted centers to blocks first, then the other elements. In this way, when we make a comparison, the other centers are loaded also in the same block, so it reduces the number of I/Os performed.\\
