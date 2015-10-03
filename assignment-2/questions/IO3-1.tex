@@ -1,0 +1,83 @@
+% !TEX root = ../main.tex
+
+\tikzset
+{
+    treenode/.style = {circle, draw=black, align=center, minimum size=1cm},
+}
+
+\section*{IO.III-1}
+
+\subsection*{(i)}
+
+\subsection*{(ii)}
+Instead of storing blocks as in-order traversal, we will separate the tree in to small subtrees of size B and store it into a block as shown in the figure. 
+\\\\
+We know that the depth of the tree is $\log n$ and the depth of sub-tree is $\log B$. Therefore IO's complexity of root-to-leaf traversal is :
+$$\frac{\log n}{\log B} = \log_{B} n$$
+
+\begin{figure}[t]
+%\centering
+{
+    \begin{tikzpicture}[->,>=stealth', level/.style={sibling distance = 10cm/#1, level distance = 1.5cm}, scale=0.6,transform shape]
+    \node [treenode] {$8$ \\ B5}
+    child
+    {
+        node [treenode] {$4$ \\ B5} 
+        child
+        {
+            node [treenode] {$2$ \\ B1} 
+            child
+            {
+            		node [treenode] {$1$ \\ B1 }
+            }
+            child
+            {
+            		node [treenode] {$3$ \\ B1}
+            }
+        }
+        child
+        {
+            node [treenode] {$6$ \\ B2} 
+                        child
+            {
+            		node [treenode] {$5$ \\ B2 }
+            }
+            child
+            {
+            		node [treenode] {$7$ \\ B2}
+            }
+        }
+    }
+    child
+    {
+        node [treenode] {$12$ \\ B5} 
+        child
+        {
+            node [treenode] {$10$ \\ B3} 
+            child
+            {
+            		node [treenode] {$9$ \\ B3 }
+            }
+            child
+            {
+            		node [treenode] {$11$ \\ B3}
+            }
+        }
+        child
+        {
+            node [treenode] {$14$ \\ B4} 
+                        child
+            {
+            		node [treenode] {$13$ \\ B4 }
+            }
+            child
+            {
+            		node [treenode] {$15$ \\ B4}
+            }
+        }
+    }
+    ;
+    \end{tikzpicture}
+    \caption{An illustration of sub-tree blocking strategy when B=3 \label{fig:simple}}
+}
+\end{figure}
