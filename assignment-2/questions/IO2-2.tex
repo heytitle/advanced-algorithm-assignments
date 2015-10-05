@@ -1,0 +1,74 @@
+\section*{IO.II-2}
+\subsection*{(i)}
+Let $n$ be the total number of items to be sorted, and $k = M/B - 1$ be the number of subarrays.\\
+
+The complexity of the EM-MergeSort is the cost of the recurrence plus the cost of merging $k$ subarrays of size $n/k$ into an array of size $n$. \\ 
+
+For each element, we have to perform $k-1$ comparisons to put it to the proper position in the final array. We have $n$ element in total, so the cost of merging is $O(n(k - 1)) = O(nk)$.\\
+
+We can write the recurrence formula of the EM-MergeSort as follows:
+
+$$T(n) = kT(n/k) + O(nk)$$
+
+The base case is when $n = 1$, then $T(n) = 1$.\\
+
+Analyzing this recurrence formula, we have:\\
+
+$$T(n) = k^2T(n/(k^2)) + 2.O(nk) = k^3T(n/(k^3)) + 3.O(nk) = \cdots$$
+$$T(n) = k^\alpha T(n/(k^\alpha)) + \alpha O(nk)$$
+
+$T(n)$ reaches the base case when $n/(k^\alpha) = 1 \iff \alpha = log_k(n)$, so the final formula is:
+
+$$T(n) = k^{log_k(n)} (n/(k^{log_k(n)})) + log_k(n).O(nk) = n + log_k(n).O(nk) = O(nklog_k(n))$$
+
+\subsection*{(ii)}
+We propose another merging strategy as shown in algorithm \ref{alg:merge}.
+
+\begin{algorithm}[h]
+  \caption{Finding minimum row square cover}
+  \label{alg:merge}
+  \begin{algorithmic}
+    \Require List of subarrays $S = {A_1, A_2, \cdots, A_k}$
+    \Ensure Merged Array $A$
+
+  \If{$k / 2 > 0$} 
+  \State $A_{last} = A{k}$
+  \State $k = k - 1$
+  \EndIf
+  \While{$SizeOf(S) > 1$}
+  \State Construct $k/2$ pairs of subarrays $\{A_1, A_2\},\cdots, \{A_{k - 1}, A_k\}$
+  \State Clear(S)
+  \For{Each pair $\{A_i, A_j\}$}
+  \State Merge $A_i$ and $A_j$ into $A_{ij}$
+  \State Add $A_{ij}$ to S
+  \EndFor
+  \EndWhile
+
+  \If{$A_{last}$ NOT NULL}
+  \State Merge S[0] with $A_{last}$
+  \EndIf
+
+  \Return S[0]
+\end{algorithmic}
+\end{algorithm}
+
+Now we analyze the complexity of the new merging strategy, and then the complexity of the EM-MergeSort using this as the main merging routine. \\
+
+The merge step is a reverse operation of a binary search tree. For each step, we reduce the number of pairs by 2. So it takes $O(log(k))$ steps to converge to 1 array.\\ 
+
+For each pair of size $n/k$, it takes $O(2n/k)$ comparisons to merge them into 1. In each step of the merge, we perform $O(n)$ comparisons.\\
+
+In general, the complexity of the merge step is $O(nlog(k))$. So the recurrence formula of the K-way MergeSort is:
+
+$$T(n) = kT(n/k) + O(nlog(k))$$
+
+We have:
+
+$$T(n) = k^2 T(n/(k^2)) + 2.O(nlog(k)) = k^3 T(n/(k^3)) + 3.O(nlog(k)) = \cdots = $$
+
+$T(n)$ reaches the base case when the problem size reaches 1. It takes $log_k(n)$ steps to do so, then:
+
+$$T(n) = n + log_k(n) O(nlog(k)) = n + O(n\frac{log(n)log(k)}{log(k)}) = O(nlog(n))$$
+
+So our new merging strategy satisfies the condition.
+
