@@ -1,3 +1,4 @@
+% !TEX root = ../main.tex
 \section*{IO.I-2}
 \subsection*{(i)}
 Let $T(n)$ denote IO's of the problem and $T_x$, $T_y$ and $T_z$ denote IO's of matrix $X$, $Y$ and $Z$ respectively.
@@ -27,57 +28,40 @@ Therefore, the total IO's is
 
 \subsection*{(iii)}
 
-% Image of X and Y how to find memory needed.
+Assume matrix $X$, $Y$ and $Z$ are small enough which can be loaded into the main memory. As a result, we can compute the product of $Z=XY$ without using any I/O's while computing. However, before doing that, we still need to perform some I/O's for loading  data and writing it back. Thus, we can formulate recurrence IO's complexity function of this algorithm.
 
-In order to compute sub-problem, all variables that we have in sub-problem should fit into main memory. 
-
-Let $M_x$, $M_y$ and $M_z$ denote memory space that is required by $X$, $Y$ and $Z$ when computing a sub-problem
-
-For each sub problem, we need
 \begin{align*}
-	M_x &= t(2t + 2(B-1)) \\
-	M_y &= 2t(t+2(B-1))\\
-	M_z &= t(t+2(B-1))
-\end{align*}
-Let $M$ denote the total memory we have. Then, we find IO's recursive base case which happens when all variables in sub-problem can fit into main memory.
-\begin{align*}
-M_x + M_y + M_z &\leq M \\
-5n^2 + 6(B-1)n &\leq M
-\end{align*}
-Thus, we can formulate recurrence IO's complexity function of this algorithm.
-\begin{align*}
-	T(t) = \begin{cases}
-	    \frac{5t^2 + 6(B-1)t}{B},& \text{if } 5t^2 + 6(B-1)t \leq M\\
-	    4T(\frac{t}{2}),              & \text{otherwise}
+	T(n) = \begin{cases}
+	    3( \frac{n}{B} + 2\sqrt{n} ) \,& \text{if } n \leq \sqrt{ \frac{M}{3} }\\
+	    8T(\frac{n}{4}) + O(\frac{n}{B}),              & \text{otherwise}
 	\end{cases}
 \end{align*}
-Hence, we have a general form of the function where $k$ is a depth of the recursive call.
+\\
+Next, we will solve this recurrence function by developing the function a bit further and then assuming we are at the base case :
 \begin{align*}
-	T(t) = 4^{k}T(\frac{t}{2^{k}})
+T(n) &= 8T(\frac{n}{4}) + O(\frac{n}{B}) \\
+&= 8( 8T(\frac{n}{4^2}) + O(\frac{n}{4B}) ) + O(\frac{n}{B}) \\
+&= 8^2T(\frac{n}{4^2}) + 3O(\frac{n}{B}) \\
+&= 8^2( 8T(\frac{n}{4^3}) + O(\frac{n}{4^2B}) ) + 3O(\frac{n}{B}) \\
+&= 8^3T(\frac{n}{4^3}) + 7O(\frac{n}{B}) \\
+&= 8^{\alpha}T(\frac{n}{4^\alpha}) + ( 2^\alpha - 1 )O(\frac{n}{B})
 \end{align*}
-We know that if $\frac{n}{2^{k}} = 5n^2 + 6(B-1)n$ we will reach the base case. Then, we can find $k$.
+\\
+Thus we will reach the base case when $\alpha \leq \log_2{ \sqrt{ \frac{3n}{M} }}$. Then we can derive
 \begin{align*}
-	\frac{t}{2^k} &= 5t^2 + 6(B-1)t \\
-	\frac{1}{2^k	} &= 5t + 6(B-1) \\
-	2^k &= \frac{1}{5t + 6(B-1)} \\
-	k\log2 &= log\frac{1}{5t + 6(B-1)} \\
-	k &= log_2 \frac{1}{5t + 6(B-1)}
+T(n) &= 8^{\alpha}T\Big(\frac{n}{4^\alpha}\Big) + ( 2^{\alpha} - 1 )O\Big(\frac{n}{B}\Big) \\
+&\leq 2^{3\log_2{ \sqrt{ \frac{3n}{M} }}} T\Big( \frac{M}{3} \Big) + ( \sqrt{ \frac{3n}{M} } - 1 )O(\frac{n}{B}) \\
+&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} T\Big( \frac{M}{3} \Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big) - O(\frac{n}{B})\\
+&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} \Big( 3 \Big(\frac{M}{3B} + 2\sqrt{\frac{M}{3}}\Big)\Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
+&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} ( \frac{M}{B} + 6\sqrt{\frac{M}{3}}) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
+&\leq \frac{3n\sqrt{3n}}{B\sqrt{M}} + \frac{6n\sqrt{n}}{M} + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
+&\leq O\Big(\frac{4n\sqrt{3n}}{B\sqrt{M}}\Big) + \frac{6n\sqrt{n}}{M} - O(\frac{n}{B})
 \end{align*}
+\\
+According to $Tall Cache Assumption$, we know that $M = \Omega(B^2)$.
+\\
+Therefore, the I/O's complexity of the algorithm is $O(\frac{n\sqrt{n}}{B\sqrt{M}})$.
 
-Before we derive $T(t)$, we will denote $A$ as
-$$ \frac{1}{5t + 6(B-1)}$$
-
-Next, we can simply derive the IO's complexity of the algorithm.
-\begin{align*}
-	T(t) &\leq 4^{k}T(\frac{t}{2^{k}}) \\
-	&\leq 4^{log_2 A}T\Big(\frac{t}{2^{log_2 A}}\Big) \\
-	&\leq A^2T(\frac{t}{A}) \\
-	&\leq A^2\Big( \frac{5\frac{t}{A}^2}{B} + \frac{6(B-1)\frac{t}{A}}{B} \Big) \\
-	&\leq \frac{5t^2}{B} + \frac{6(B-1)t}{AB} \\
-	&= O(\frac{t^2}{B})
-\end{align*}
-
-Therefore the IO's complexity of the algorithm is $O(t^2/B)$.
 
 \subsection*{(iv)}
 
