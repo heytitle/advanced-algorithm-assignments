@@ -1,3 +1,4 @@
+% !TEX root = ../main.tex
 \section*{IO.I-2}
 \subsection*{(i)}
 Let $T(n)$ denote IO's of the problem and $T_x$, $T_y$ and $T_z$ denote IO's of matrix $X$, $Y$ and $Z$ respectively.
@@ -27,63 +28,46 @@ Therefore, the total IO's is
 
 \subsection*{(iii)}
 
-% Image of X and Y how to find memory needed.
+Assume matrix $X$, $Y$ and $Z$ are small enough which can be loaded into the main memory. As a result, we can compute the product of $Z=XY$ without using any I/O's while computing. However, before doing that, we still need to perform some I/O's for loading  data and writing it back. Thus, we can formulate recurrence IO's complexity function of this algorithm.
 
-In order to compute sub-problem, all variables that we have in sub-problem should fit into main memory. 
-
-Let $M_x$, $M_y$ and $M_z$ denote memory space that is required by $X$, $Y$ and $Z$ when computing a sub-problem
-
-For each sub problem, we need
 \begin{align*}
-	M_x &= t(2t + 2(B-1)) \\
-	M_y &= 2t(t+2(B-1))\\
-	M_z &= t(t+2(B-1))
-\end{align*}
-Let $M$ denote the total memory we have. Then, we find IO's recursive base case which happens when all variables in sub-problem can fit into main memory.
-\begin{align*}
-M_x + M_y + M_z &\leq M \\
-5n^2 + 6(B-1)n &\leq M
-\end{align*}
-Thus, we can formulate recurrence IO's complexity function of this algorithm.
-\begin{align*}
-	T(t) = \begin{cases}
-	    \frac{5t^2 + 6(B-1)t}{B},& \text{if } 5t^2 + 6(B-1)t \leq M\\
-	    4T(\frac{t}{2}),              & \text{otherwise}
+	T(n) = \begin{cases}
+	    3( \frac{n}{B} + 2\sqrt{n} ) \,& \text{if } n \leq \sqrt{ \frac{M}{3} }\\
+	    8T(\frac{n}{4}) + O(\frac{n}{B}),              & \text{otherwise}
 	\end{cases}
 \end{align*}
 \\
+Next, we will solve this recurrence function by developing the function a bit further and then assuming we are at the base case :
+\begin{align*}
+T(n) &= 8T(\frac{n}{4}) + O(\frac{n}{B}) \\
+&= 8( 8T(\frac{n}{4^2}) + O(\frac{n}{4B}) ) + O(\frac{n}{B}) \\
+&= 8^2T(\frac{n}{4^2}) + 3O(\frac{n}{B}) \\
+&= 8^2( 8T(\frac{n}{4^3}) + O(\frac{n}{4^2B}) ) + 3O(\frac{n}{B}) \\
+&= 8^3T(\frac{n}{4^3}) + 7O(\frac{n}{B}) \\
+&= 8^{\alpha}T(\frac{n}{4^\alpha}) + ( 2^\alpha - 1 )O(\frac{n}{B})
+\end{align*}
 \\
-\textbf{Theorem.} the IO's complexity of the algorithm is $O(t^2/B)$
-\begin{proof}
-We will proof this theorem by induction.\\
-
-Assume, $t'$ is the value that satisfies base case condition, 
+Thus we will reach the base case when $\alpha \leq \log_2{ \sqrt{ \frac{3n}{M} }}$. Then we can derive
 \begin{align*}
-	5t'^{2} + 6(B-1)t' \leq M
+T(n) &= 8^{\alpha}T\Big(\frac{n}{4^\alpha}\Big) + ( 2^{\alpha} - 1 )O\Big(\frac{n}{B}\Big) \\
+&\leq 2^{3\log_2{ \sqrt{ \frac{3n}{M} }}} T\Big( \frac{M}{3} \Big) + ( \sqrt{ \frac{3n}{M} } - 1 )O(\frac{n}{B}) \\
+&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} T\Big( \frac{M}{3} \Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big) - O(\frac{n}{B})\\
+&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} \Big( 3 \Big(\frac{M}{3B} + 2\sqrt{\frac{M}{3}}\Big)\Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
+&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} ( \frac{M}{B} + 6\sqrt{\frac{M}{3}}) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
+&\leq \frac{3n\sqrt{3n}}{B\sqrt{M}} + \frac{6n\sqrt{n}}{M} + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
+&\leq O\Big(\frac{4n\sqrt{3n}}{B\sqrt{M}}\Big) + \frac{6n\sqrt{n}}{M} - O(\frac{n}{B})
 \end{align*}
-
-Hence, for some $t'$ the I/O's complexity is :
-\begin{align*}
-	T(t') \leq O(t'^2/B)
-\end{align*}
-
-Then, we can derive the I/O's complexity of the next case:
-\begin{align*}
-	T(2t') &\leq 4T(t') \\
-	&\leq 4 O(t'^2/B) \\
-	&\leq O( 4t'^2/B ) \\
-	&\leq O( (2t')^2/B ) \\
-\end{align*}
-
-Therefore, the IO's complexity of the algorithm is $O(t^2/B)$ as claimed.
-\end{proof}
+\\
+According to $Tall Cache Assumption$, we know that $M = \Omega(B^2)$.
+\\
+Therefore, the I/O's complexity of the algorithm is $O(\frac{n\sqrt{n}}{B\sqrt{M}})$.
 
 
 \subsection*{(iv)}
 
-Claim : The algorithm from (iii) has better spatial locality.
+Claim. The algorithm from (iii) has better spatial locality.
 
-To prove the claim, as we can see from (i), the algorithm does not use blocks of $Y$ effectively. When it fetches a block of $Y$, it uses only one variable and move on. In contrast, the algorithm from (iii) can use all variables in a block. Because the variables are kept in main memory and used during the execution of sub problem.
+To prove the claim, as we can see from (i), the algorithm does not use blocks of $Y$ effectively. When it fetches a block of $Y$, it uses only one variable and move on. In contrast, the algorithm from (iii) can use all variables in a block. Because all variables that it needs for execution sub-problem are in the main memory already.
 \\\\
 Claim : The algorithm from (iii) has better temporal locality. 
 
