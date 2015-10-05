@@ -51,39 +51,39 @@ Thus, we can formulate recurrence IO's complexity function of this algorithm.
 	    4T(\frac{t}{2}),              & \text{otherwise}
 	\end{cases}
 \end{align*}
-\\
-\\
-\textbf{Theorem.} the IO's complexity of the algorithm is $O(t^2/B)$
-\begin{proof}
-We will proof this theorem by induction.\\
-
-Assume, $t'$ is the value that satisfies base case condition, 
+Hence, we have a general form of the function where $k$ is a depth of the recursive call.
 \begin{align*}
-	5t'^{2} + 6(B-1)t' \leq M
+	T(t) = 4^{k}T(\frac{t}{2^{k}})
+\end{align*}
+We know that if $\frac{n}{2^{k}} = 5n^2 + 6(B-1)n$ we will reach the base case. Then, we can find $k$.
+\begin{align*}
+	\frac{t}{2^k} &= 5t^2 + 6(B-1)t \\
+	\frac{1}{2^k	} &= 5t + 6(B-1) \\
+	2^k &= \frac{1}{5t + 6(B-1)} \\
+	k\log2 &= log\frac{1}{5t + 6(B-1)} \\
+	k &= log_2 \frac{1}{5t + 6(B-1)}
 \end{align*}
 
-Hence, for some $t'$ the I/O's complexity is :
+Before we derive $T(t)$, we will denote $A$ as
+$$ \frac{1}{5t + 6(B-1)}$$
+
+Next, we can simply derive the IO's complexity of the algorithm.
 \begin{align*}
-	T(t') \leq O(t'^2/B)
+	T(t) &\leq 4^{k}T(\frac{t}{2^{k}}) \\
+	&\leq 4^{log_2 A}T\Big(\frac{t}{2^{log_2 A}}\Big) \\
+	&\leq A^2T(\frac{t}{A}) \\
+	&\leq A^2\Big( \frac{5\frac{t}{A}^2}{B} + \frac{6(B-1)\frac{t}{A}}{B} \Big) \\
+	&\leq \frac{5t^2}{B} + \frac{6(B-1)t}{AB} \\
+	&= O(\frac{t^2}{B})
 \end{align*}
 
-Then, we can derive the I/O's complexity of the next case:
-\begin{align*}
-	T(2t') &\leq 4T(t') \\
-	&\leq 4 O(t'^2/B) \\
-	&\leq O( 4t'^2/B ) \\
-	&\leq O( (2t')^2/B ) \\
-\end{align*}
-
-Therefore, the IO's complexity of the algorithm is $O(t^2/B)$ as claimed.
-\end{proof}
-
+Therefore the IO's complexity of the algorithm is $O(t^2/B)$.
 
 \subsection*{(iv)}
 
-Claim : The algorithm from (iii) has better spatial locality.
+Claim. The algorithm from (iii) has better spatial locality.
 
-To prove the claim, as we can see from (i), the algorithm does not use blocks of $Y$ effectively. When it fetches a block of $Y$, it uses only one variable and move on. In contrast, the algorithm from (iii) can use all variables in a block. Because the variables are kept in main memory and used during the execution of sub problem.
+To prove the claim, as we can see from (i), the algorithm does not use blocks of $Y$ effectively. When it fetches a block of $Y$, it uses only one variable and move on. In contrast, the algorithm from (iii) can use all variables in a block. Because all variables that it needs for execution sub-problem are in the main memory already.
 \\\\
 Claim : The algorithm from (iii) has better temporal locality. 
 
