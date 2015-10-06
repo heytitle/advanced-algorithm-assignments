@@ -12,7 +12,7 @@
     \Require $G( V, E )$
     \Ensure Color of $v_i \in V$
     \Operation
-    \State Convert $G$ into a directed graph $G^*$
+    \State Convert $G$ into a DAG graph $G^*$ by directing every edge ( $v_i$, $v_j$ ) where $i < j$
     \State Initialise an array F[0..$n-1$], a min-priority queue $Q$
     \State Initialise a set of colour C[0..$d_{max}$]
     \For {$i$ := 0 to $n-1$}
@@ -21,7 +21,7 @@
 	\State $f(v_i)$ := Choose one colour from C $\setminus$ \{ extracted pairs \}
 	\State F[i] := $f(v_i)$
 	    \For { each $j$ in $V[i].OutNeighbors$ }
-	        \State Insert a part ( $f(v_i)$, $j$ ) into $Q$
+	        \State Insert a pair ( $f(v_i)$, $j$ ) into $Q$
 	   \EndFor
     \EndFor \\
     \Return F
@@ -30,13 +30,16 @@
 \textbf{Theorem.} The algorithm performs $O( SORT(|V|+|E|) )$ and returns valid solution.
 
 \begin{proof}
-We observe that each iteration the algorithm performs $$2O( SORT(1 + |N_{in}(v_i)| ))$$
+    Let denote $N_{in}$ a set of in-neighbor of $v_i \in V$. We observe that each iteration the algorithm performs
+    $$2O( SORT(1 + |N_{in}(v_i)| ))$$
 One from $Extract-Min$ operation and the other from $Insertions$. \\
 Thus, the total I/O's complexity  is :
 \begin{align*}
- \sum^{n-1}_{i=0}{O( 1 + |N_{in}(v_i)} = O( SORT( |V|+|E| ))
+    T(G(V,E)) &= \sum^{n-1}_{i=0}{O( 1 + |N_{in}|)(v_i)} \\
+    &= O( SORT( |V|+|E| ))
 \end{align*}
 \\
-To prove that the algorithm returns valid solution. We first argue that the algorithm does not use more than $d_max + 1 $ colours . Secondly, there are not 2 adjacent nodes having same colour because each time it picks a colour the list of colours is subtracted by colours used for its in-neighbors.
-	
+To prove that the algorithm returns valid solution. We first argue that the algorithm does not use more than $d_{max} + 1 $ colours .
+Secondly, there are no 2 adjacent nodes having same colour because each time it picks a colour the list of colours is subtracted by colours used for its in-neighbors.
+
 \end{proof}

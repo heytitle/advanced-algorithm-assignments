@@ -16,7 +16,7 @@ $$\#I/Os = \log(n/B) \pm O(1)$$
 \subsection*{(ii)}
 Instead of storing blocks as in-order traversal, we will separate the tree in to small subtrees of size B and store it into a block as shown in figure \ref{fig:blocking}.
 \\\\
-We know that the depth of the tree is $\log n$ and the depth of sub-tree is $\log B$. Therefore IO's complexity of root-to-leaf traversal is :
+We know that the depth of the tree is $\log n$ and the depth of subtree is $\log B$. Therefore IO's complexity of root-to-leaf traversal is :
 $$\frac{\log n}{\log B} = \log_{B} n$$
 
 \begin{figure}[t]
