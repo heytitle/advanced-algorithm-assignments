@@ -8,9 +8,13 @@
 \section*{IO.III-1}
 
 \subsection*{(i)}
+When the subarray fits into 1 block, then one of the subtree does not need any more I/Os and the other one needs one more I/O (because the next center is in a consecutive block).\\ 
+
+The number of steps needed to reach such case is $\log(n/B)$. Then the error of the number of I/Os is $O(1)$. We have:
+$$\#I/Os = \log(n/B) \pm O(1)$$
 
 \subsection*{(ii)}
-Instead of storing blocks as in-order traversal, we will separate the tree in to small subtrees of size B and store it into a block as shown in the figure. 
+Instead of storing blocks as in-order traversal, we will separate the tree in to small subtrees of size B and store it into a block as shown in figure \ref{fig:blocking}.
 \\\\
 We know that the depth of the tree is $\log n$ and the depth of sub-tree is $\log B$. Therefore IO's complexity of root-to-leaf traversal is :
 $$\frac{\log n}{\log B} = \log_{B} n$$
@@ -79,5 +83,6 @@ $$\frac{\log n}{\log B} = \log_{B} n$$
     ;
     \end{tikzpicture}
     \caption{An illustration of sub-tree blocking strategy when B=3 \label{fig:simple}}
+    \label{fig:blocking}
 }
 \end{figure}
