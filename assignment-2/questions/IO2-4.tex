@@ -2,7 +2,7 @@
 Consider a permutation algorithm that does use additional memory blocks. We revise it a little bit so that all write operations are 
 to blocks in A. We know that whenever we perform a write, there is at least 1 free block in A because it is a movement-only 
 algorithm. Thus, whenever the algorithm perform a write to an external block, we perform an additional write to move it back to a
-free block in A. After finishing the permutation task, we write these blocks back to the external memory. In this way, each block may require 3 I/O's. Therefore the number of possible states created by a write is $3\frac{n}{B} $. \\
+free block in A. After finishing the permutation task, we write these blocks back to the external memory. In this way, each block require at most 3 I/O's. Therefore the maximum number of possible states created by a write is $3\frac{n}{B} $. \\
 
 \begin{itemize} 
   \item The total number of permutations of an array A of size $n$ is $n!$. In this problem, we do not care about the number of 

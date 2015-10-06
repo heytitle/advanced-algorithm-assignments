@@ -8,43 +8,48 @@ For each element, we have to perform $k-1$ comparisons to put it to the proper p
 
 We can write the recurrence formula of the EM-MergeSort as follows:
 
-$$T(n) = kT(n/k) + O(nk)$$
+\begin{align*}
+	T(n) = \begin{cases}
+	    1& \text{if } n = 1\\
+        2T(n/k)+O(nk)              & \text{otherwise}
+	\end{cases}
+\end{align*}
 
 The base case is when $n = 1$, then $T(n) = 1$.\\
 
-Analyzing this recurrence formula, we have:\\
+Analyzing this recurrence formula, we have:
+\begin{align*}
+    T(n) &= k^2T(n/(k^2)) + 2O(nk)\\
+    &= k^3T(n/(k^3)) + 3O(nk) \\
+    &= \cdots \\
+    &= k^\alpha T(n/(k^\alpha)) + \alpha O(nk)
+\end{align*}
 
-\begin{equation*}
-\begin{aligned}
-&T(n) = k^2T(n/(k^2)) + 2.O(nk) \\
-&= k^3T(n/(k^3)) + 3.O(nk) \\
-&= \cdots \\
-&= k^\alpha T(n/(k^\alpha)) + \alpha O(nk) \\
-\end{aligned}
-\end{equation*}
+$T(n)$ reaches the base case when $n/(k^\alpha) = 1 \iff \alpha = \log_k(n)$, so the final formula is:
 
-
-$T(n)$ reaches the base case when $n/(k^\alpha) = 1 \iff \alpha = \log_k n$, so the number of I/Os is:
-
-$$T(n) = k^{\log_k n} (n/(k^{log_k n})) + \log_k n.O(nk) = n + \log_k n.O(nk) = O(nk\log_k n)$$
+\begin{align*}
+    T(n) &= k^{log_k(n)} (n/(k^{log_k(n)})) + \log_k(n)O(nk) \\
+    &= n + \log_k(n)O(nk)\\
+    &= O(nk\log_k(n))
+\end{align*}
 
 \subsection*{(ii)}
 We propose another merging strategy as shown in algorithm \ref{alg:merge}.
 
 \begin{algorithm}[h]
-  \caption{Finding minimum row square cover}
+  \caption{Merging k arrays}
   \label{alg:merge}
   \begin{algorithmic}
-    \Require List of subarrays $S = {A_1, A_2, \cdots, A_k}$
+      \Require List of subarrays $S = [A_1, A_2, \cdots, A_k]$
     \Ensure Merged Array $A$
 
-  \If{$k / 2 > 0$} 
+    \If{ $( k \mod 2 ) > 0$} 
   \State $A_{last} = A{k}$
   \State $k = k - 1$
   \EndIf
   \While{$SizeOf(S) > 1$}
   \State Construct $k/2$ pairs of subarrays $\{A_1, A_2\},\cdots, \{A_{k - 1}, A_k\}$
-  \State Clear(S)
+  \State S := [\,\,]
   \For{Each pair $\{A_i, A_j\}$}
   \State Merge $A_i$ and $A_j$ into $A_{ij}$
   \State Add $A_{ij}$ to S
@@ -61,28 +66,35 @@ We propose another merging strategy as shown in algorithm \ref{alg:merge}.
 
 Now we analyze the complexity of the new merging strategy, and then the complexity of the EM-MergeSort using this as the main merging routine. \\
 
-For each step, we reduce the number of pairs by 2. So it takes $O(\log k)$ steps to converge to 1 array.\\ 
+For each step, we reduce the number of pairs by 2. So it takes $O(\log(k))$ steps to converge to 1 array.\\ 
 
 For each pair of size $n/k$, it takes $O(2n/k)$ comparisons to merge them into 1. In each step of the merge, we perform $O(n)$ comparisons.\\
 
-In general, the complexity of the merge step is $O(n\log k)$. So the recurrence formula of the K-way MergeSort is:
+In general, the complexity of the merge step is $O(n\log(k))$. So the recurrence formula of the K-way MergeSort is:
 
-$$T(n) = kT(n/k) + O(n\log k)$$
+\begin{align*}
+	T(n) = \begin{cases}
+	    1& \text{if } n = 1\\
+        2T(n/k)+O(n\log{k})              & \text{otherwise}
+	\end{cases}
+\end{align*}
 
 We have:
 
-\begin{equation*}
-\begin{aligned}
-T(n) &= k^2 T(n/(k^2)) + 2.O(n\log k) \\
-&= k^3 T(n/(k^3)) + 3.O(n\log k) \\
-&= \cdots \\
-&= k^\alpha T(n/(k^\alpha)) + \alpha O(n\log k)
-\end{aligned}
-\end{equation*}
+\begin{align*}
+    T(n) &= k^2 T(n/(k^2)) + 2O(n\log(k)) \\
+    &= k^3 T(n/(k^3)) + 3O(n\log(k)) \\
+    &= \cdots \\
+    &= k^\alpha T(n/(k^\alpha)) + \alpha O(n\log(k))
+\end{align*}
 
 $T(n)$ reaches the base case when the problem size reaches 1. It takes $\log_k n$ steps to do so, then:
 
-$$T(n) = n + \log_k n O(n\log k) = n + O(n\frac{log n\log k}{\log k}) = O(n\log n)$$
+\begin{align*}
+T(n) &= n + \log_k(n) O(n\log(k)) \\
+        &= n + O(n\frac{log(n)\log(k)}{\log(k)}) \\
+        &= O(n\log(n))
+\end{align*}
 
 So our new merging strategy satisfies the condition.
 

@@ -1,0 +1,26 @@
+% !TEX root = ../main.tex
+\section*{IO.III-2}
+
+Let $P$ denote the sequence of operations $op_0, \cdots, op_{n-1}$ and $op_i = (i,type_i,x_i)$ where $i$ is timestamp,
+$type_i \in \{ Insert, Delete, Search \}$ and $x_i$ is the value of $op_i$ . Suppose all $op_i \in P$ are stored in external memory already.
+In order to report $Search$ operations in O$(SORT(n))$, we have to do following steps below.
+\begin{enumerate}
+    \item Sort $P$ by $x_i$ and $i$ in ascending order using EM-MergeSort
+    \item Traverse through all $op_i \in P$
+        \begin{itemize}
+            \item if $type_i \in \{ Insert, Delete \}$ then $pv$ = $op_i$
+            \item if $type_i \in \{ Search \}$ and $x_i$ is equal to $x_{pv}$ and $type_{pv}$ = Insert
+                then report $op_i$ = Found
+            \item otherwise report $op_i$ = Not Found
+        \end{itemize}
+\end{enumerate}
+
+\textbf{Theorem.} This steps performs $O( SORT(n) )$ and report $Search$ operations correctly.
+\begin{proof}
+We first look at the number of I/O's that we need to perform such steps.
+We know that $EM-MergeSort$ takes $O(SORT(n))$ I/O's and traversing sorted array takes $O(n/B)$ I/O's.
+The total number of I/O's complexity is still $O(SORT(n))$. Secondly, this steps will always report correct result since
+we sort $P$ by $x_i$ and $i$ in ascending order that means it will report as Found only when there is a $Insert$ operation
+coming before $Search$ operation.
+\end{proof}
+
