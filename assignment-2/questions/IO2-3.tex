@@ -1,0 +1,3 @@
+\section*{IO.II-3}
+
+If we assume that the algorithm runs in $ O(n) $ time it still impossible for it to work in  $ O(n/B) $ IOs. Supposedly a block $ B $ in the input array can contain $ n $ elements. For the algorithm to perform this amount of IOs we would need to assume that the values inside the block will be placed in the output array next to each other. Therefore we would need to assume the input array is already sorted. Since we cannot guarantee this kind of distribution we have to assume that in the worst case scenario we will $ n $ elements from a block will find its own places in $ n $ separate blocks in the output. Since in this optimistic case the number of IOs is O(n) we can assume it's impossible for them to be O(n/B).
