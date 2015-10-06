@@ -25,21 +25,6 @@ Analyzing this recurrence formula, we have:
     &= k^\alpha T(n/(k^\alpha)) + \alpha O(nk)
 \end{align*}
 
-<<<<<<< HEAD
-\begin{equation*}
-\begin{aligned}
-&T(n) = k^2T(n/(k^2)) + 2.O(nk) \\
-&= k^3T(n/(k^3)) + 3.O(nk) \\
-&= \cdots \\
-&= k^\alpha T(n/(k^\alpha)) + \alpha O(nk) \\
-\end{aligned}
-\end{equation*}
-
-
-$T(n)$ reaches the base case when $n/(k^\alpha) = 1 \iff \alpha = \log_k n$, so the number of I/Os is:
-
-$$T(n) = k^{\log_k n} (n/(k^{log_k n})) + \log_k n.O(nk) = n + \log_k n.O(nk) = O(nk\log_k n)$$
-=======
 $T(n)$ reaches the base case when $n/(k^\alpha) = 1 \iff \alpha = \log_k(n)$, so the final formula is:
 
 \begin{align*}
@@ -47,7 +32,6 @@ $T(n)$ reaches the base case when $n/(k^\alpha) = 1 \iff \alpha = \log_k(n)$, so
     &= n + \log_k(n)O(nk)\\
     &= O(nk\log_k(n))
 \end{align*}
->>>>>>> Fix typo and mistake
 
 \subsection*{(ii)}
 We propose another merging strategy as shown in algorithm \ref{alg:merge}.
