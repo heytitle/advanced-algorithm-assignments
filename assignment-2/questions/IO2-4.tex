@@ -20,9 +20,12 @@ Similar to the lecture notes, we come up with:
   \begin{aligned}
   \frac{n!}{\big(B!\big)^{\frac{n}{B}}} &\leq \bigg(\frac{n}{B} \bigg)^{\frac{X}{2}} . \bigg(\frac{3n}{B} \binom MB\bigg)^{\frac{X}{2}} \\
   &= 3^{\frac{X}{2}}.\frac{n}{B}^X.\bigg(\binom MB\bigg)^{\frac{X}{2}} \\
-  \iff X.\log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg) &\geq \log \bigg(\frac{n!}{(B!)^{\frac{n}{B}}}\bigg)
 \end{aligned}
 \end{equation*}
+
+Taking the log on both sides, we have:
+
+$$ X.\log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg) \geq \log \bigg(\frac{n!}{(B!)^{\frac{n}{B}}}\bigg)$$
 
 Similar to the course notes, we derive the following bound of the right-hand-side expression from Stirling's approximation:
 
@@ -35,9 +38,13 @@ For the left-hand-side expression, using the condition that $n < B\sqrt{\binom M
   \begin{aligned}
   \log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg) &< \log \bigg(3^\frac{1}{2} . \binom MB \bigg) \\
   &\leq \frac{\log 3}{2} + B \log \biggl( \frac{eM}{B} \bigg) \\
-  &\leq 3B \log \big(\frac{M}{B}\big)
 \end{aligned}
 \end{equation*}
+
+According to the proof in the course-notes, we assume that $\log(eM/B) < 2\log(M/B)$, which implies that $\log e < \log M/B$. Based on that assumption, we can imply that $(\log 3) / 2 < \log M/B < B \log M/B$ because $(\log 3) / 2 < \log e$. \\
+
+Thus, we have:
+$$\log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg) \leq 3B \log \big(\frac{M}{B}\big)$$
 
 Hence:
 
