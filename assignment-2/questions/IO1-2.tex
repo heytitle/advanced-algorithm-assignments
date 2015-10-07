@@ -1,74 +1,98 @@
 % !TEX root = ../main.tex
 \section*{IO.I-2}
 \subsection*{(i)}
-Let $T(n)$ denote IO's of the problem and $T_x$, $T_y$ and $T_z$ denote IO's of matrix $X$, $Y$ and $Z$ respectively.
+Let $T(n)$ denote I/O's of the problem and $T_x$, $T_y$ and $T_z$ denote the number of I/O's of matrices $X$, $Y$ and $Z$ respectively.
 For each cell in $Z$, we need
 \begin{align*}
 	T_x &\leq \frac{\sqrt{n}+2(B-1)}{B}\\
 	T_y &\leq \sqrt{n} \\
 	T_z &= 1
 \end{align*}
-Then, the total IO's we need for computing a cell is :
+Then, the total number of I/O's we need for computing a cell of $Z$ is :
 $$\frac{\sqrt{n}+2(B-1)}{B} + \sqrt{n} + 1$$
-Therefore, the total IO's that we need to compute the product $Z=XY$ :
+Therefore, the total number of I/O's that we need for computing the product $Z=XY$ :
 \begin{align*}
-	T(n) &\leq ( \frac{\sqrt{n}+2(B-1)}{B} + \sqrt{n} + 1	)n\\
+    T_{io}(n) &\leq ( \frac{\sqrt{n}+2(B-1)}{B} + \sqrt{n} + 1	)n\\
 	&\leq \frac{n\sqrt{n}+2n(B-1)}{B} + n\sqrt{n} + n \\
 	&= O(n\sqrt{n})
 \end{align*}
 
 \subsection*{(ii)}
-If $Y$ is stored in $column-major$ order. For each cell, we will use $$T_y=\frac{\sqrt{n}+2(B-1)}{B}$$.
-Therefore, the total IO's is
+If $Y$ is stored in $column-major$ order. For each cell, we use $$T_y=\frac{\sqrt{n}+2(B-1)}{B}$$
+Therefore, the total number of I/O's is :
 \begin{align*}
-	T(n) &\leq ( 2\frac{\sqrt{n}+2(B-1)}{B} + 1	)n\\
+    T_{io}(n) &\leq ( 2\frac{\sqrt{n}+2(B-1)}{B} + 1	)n\\
 	&\leq \frac{2n\sqrt{n}+4n(B-1)}{B} + n \\
 	&= O(\frac{n\sqrt{n}}{B})
 \end{align*}
 
 \subsection*{(iii)}
 
-Assume matrix $X$, $Y$ and $Z$ are small enough which can be loaded into the main memory. As a result, we can compute the product of $Z=XY$ without using any I/O's while computing. However, before doing that, we still need to perform some I/O's for loading  data and writing it back. Thus, we can formulate recurrence IO's complexity function of this algorithm.
+Assume matrices $X$, $Y$ and $Z$ are small enough which can be loaded into the internal memory. As a result, we can compute the product of $Z=XY$
+without using any I/O's while computing. However, before doing that, we still need to perform some I/O's for loading data and writing the result back.
+
+We know that the number of I/O's for loading or writing a matrix into the internal memory is :
+$$\sqrt{n}(\sqrt{n}/B+2)$$
+
+Since in the base case, we need 2 matrices, namely $X$ and $Y$, in internal memory and after finishing computing
+we need to write the result, $Z$, back to external memory. Hence, the I/O's complexity of the base case is:
 
 \begin{align*}
-	T(n) = \begin{cases}
-	    3( \frac{n}{B} + 2\sqrt{n} ) \,& \text{if } n \leq \sqrt{ \frac{M}{3} }\\
-	    8T(\frac{n}{4}) + O(\frac{n}{B}),              & \text{otherwise}
+    3\sqrt{n}(\sqrt{n}/B + 2)
+\end{align*}
+
+Because our problem is divided into $8$ subproblems with size 4 time smaller and need to write the result back after finishing.
+Then, we can formulate the recurrence of I/O's complexity of this algorithm.
+
+\begin{align*}
+    T_{io}(n) = \begin{cases}
+	    3( \frac{n}{B} + 2\sqrt{n} ) & \text{if } n \leq \frac{M}{3}\\
+        8T_{io}(\frac{n}{4}) + O(\frac{n}{B})              & \text{otherwise}
 	\end{cases}
 \end{align*}
-\\
-Next, we will solve this recurrence function by developing the function a bit further and then assuming we are at the base case :
+
+Next, we then solve this recurrence function.
 \begin{align*}
-T(n) &= 8T(\frac{n}{4}) + O(\frac{n}{B}) \\
-&= 8( 8T(\frac{n}{4^2}) + O(\frac{n}{4B}) ) + O(\frac{n}{B}) \\
-&= 8^2T(\frac{n}{4^2}) + 3O(\frac{n}{B}) \\
-&= 8^2( 8T(\frac{n}{4^3}) + O(\frac{n}{4^2B}) ) + 3O(\frac{n}{B}) \\
-&= 8^3T(\frac{n}{4^3}) + 7O(\frac{n}{B}) \\
-&= 8^{\alpha}T(\frac{n}{4^\alpha}) + ( 2^\alpha - 1 )O(\frac{n}{B})
+    T_{io}(n) &= 8T_{io}(\frac{n}{4}) + O(\frac{n}{B}) \\
+              &= 8( 8T_{io}(\frac{n}{4^2}) + O(\frac{n}{4B}) ) + O(\frac{n}{B}) \\
+              &= 8^2T_{io}(\frac{n}{4^2}) + 3O(\frac{n}{B}) \\
+              &= 8^2( 8T_{io}(\frac{n}{4^3}) + O(\frac{n}{4^2B}) ) + 3O(\frac{n}{B}) \\
+              &= 8^3T_{io}(\frac{n}{4^3}) + 7O(\frac{n}{B}) \\
+&= ... \\
+&= 8^{\alpha}T_{io}(\frac{n}{4^\alpha}) + ( 2^\alpha - 1 )O(\frac{n}{B})
 \end{align*}
-\\
-Thus we will reach the base case when $\alpha \leq \log_2{ \sqrt{ \frac{3n}{M} }}$. Then we can derive
+
+We reach the base case when $\alpha = \log_2{ \sqrt{ \frac{3n}{M} }}$. Then we can derive
 \begin{align*}
-T(n) &= 8^{\alpha}T\Big(\frac{n}{4^\alpha}\Big) + ( 2^{\alpha} - 1 )O\Big(\frac{n}{B}\Big) \\
-&\leq 2^{3\log_2{ \sqrt{ \frac{3n}{M} }}} T\Big( \frac{M}{3} \Big) + ( \sqrt{ \frac{3n}{M} } - 1 )O(\frac{n}{B}) \\
-&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} T\Big( \frac{M}{3} \Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big) - O(\frac{n}{B})\\
-&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} \Big( 3 \Big(\frac{M}{3B} + 2\sqrt{\frac{M}{3}}\Big)\Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
-&\leq \frac{3n\sqrt{3n}}{M\sqrt{M}} ( \frac{M}{B} + 6\sqrt{\frac{M}{3}}) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
-&\leq \frac{3n\sqrt{3n}}{B\sqrt{M}} + \frac{6n\sqrt{n}}{M} + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O(\frac{n}{B}) \\
-&\leq O\Big(\frac{4n\sqrt{3n}}{B\sqrt{M}}\Big) + \frac{6n\sqrt{n}}{M} - O(\frac{n}{B})
+    T_{io}(n) &= 8^{\alpha}T_{io}\Big(\frac{n}{4^\alpha}\Big) + ( 2^{\alpha} - 1 )O\Big(\frac{n}{B}\Big) \\
+              &= 2^{3\log_2{ \sqrt{ \frac{3n}{M} }}} T_{io}\Big( \frac{M}{3} \Big) + ( \sqrt{ \frac{3n}{M} } - 1 )O\Big(\frac{n}{B}\Big) \\
+              &= \frac{3n\sqrt{3n}}{M\sqrt{M}} T_{io}\Big( \frac{M}{3} \Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big) - O\Big(\frac{n}{B}\Big)\\
+&= \frac{3n\sqrt{3n}}{M\sqrt{M}} \Big( 3 \Big(\frac{M}{3B} + 2\sqrt{\frac{M}{3}}\Big)\Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O\Big(\frac{n}{B}\Big) \\
+&= \frac{3n\sqrt{3n}}{M\sqrt{M}} \Big( \frac{M}{B} + 6\sqrt{\frac{M}{3}}\Big) + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O\Big(\frac{n}{B}\Big) \\
+&= \frac{3n\sqrt{3n}}{B\sqrt{M}} + \frac{18n\sqrt{n}}{M} + O\Big(\frac{n\sqrt{3n}}{B\sqrt{M}}\Big)- O\Big(\frac{n}{B}\Big) \\
+&= O\Big(\frac{4n\sqrt{3n}}{B\sqrt{M}}\Big) + \frac{18n\sqrt{n}}{M} - O\Big(\frac{n}{B}\Big)
 \end{align*}
-\\
+
 According to $Tall Cache Assumption$, we know that $M = \Omega(B^2)$.
-\\
+
 Therefore, the I/O's complexity of the algorithm is $O(\frac{n\sqrt{n}}{B\sqrt{M}})$.
 
 
 \subsection*{(iv)}
 
 Claim. The algorithm from (iii) has better spatial locality.
+\\
 
-To prove the claim, as we can see from (i), the algorithm does not use blocks of $Y$ effectively. When it fetches a block of $Y$, it uses only one variable and move on. In contrast, the algorithm from (iii) can use all variables in a block. Because all variables that it needs for execution sub-problem are in the main memory already.
+To prove the claim, we know that the algorithm from (iii) does not perform any I/O's until
+it reaches the base case. When it is at the base case, a subproblem fits into the internal memory,
+and no blocks are evicted until the subproblem is complete. Each loaded block contains more than 1 useful
+variable for the problem, while the algorithm from (i) uses only 1 variable from each block in matrix $Y$ before
+that block is evicted.
 \\\\
-Claim : The algorithm from (iii) has better temporal locality. 
+Claim : The algorithm from (iii) has better temporal locality.
+\\
 
-To prove the claim, assume $B_0$ is the first block of $Y$. In (i), the algorithm will need the block again when the algorithm finishes $m$ iterations while the algorithm from (iii) will need the block after $m/2$ iterations which is 2 time shorter than (i).
+To prove the claim, assume $t$ is the time that an element of $Y$ is used by both algorithm. The algorithm
+from (i) will use the variable again after $t + m-1$ iterations. While the algorithm from (iii) will use again,
+roughly less than $ t + m/2$, because its problems are divided into 4 pieces and each subproblem is finished
+before moving to a bigger subproblem.

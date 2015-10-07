@@ -1,0 +1,53 @@
+\section*{IO.II-4}
+Consider a permutation algorithm that does use additional memory blocks. We revise it a little bit so that all write operations are 
+to blocks in A. We know that whenever we perform a write, there is at least 1 free block in A because it is a movement-only 
+algorithm. Thus, whenever the algorithm perform a write to an external block, we perform an additional write to move it back to a
+free block in A. After finishing the permutation task, we write these blocks back to the external memory. In this way, each block require at most 3 I/O's. Therefore the maximum number of possible states created by a write is $3\frac{n}{B} $. \\
+
+\begin{itemize} 
+  \item The total number of permutations of an array A of size $n$ is $n!$. In this problem, we do not care about the number of 
+permutations inside a block. So we ignore $(B!)^{\frac{n}{B} }$ permutations. Then the total number of permutations available is 
+$\frac{n!}{(B!)^{\frac{n}{B} }}$.
+\item Because we write each block back to the internal memory if it is written outside, one read can create a number of possible states as $\frac{n}{B} $
+\item One write can create a number of possible states as $\frac{3n}{B} \binom MB$
+\end{itemize}
+
+Let $X^r$ denote the number of reads performed, and $X^w$ denote the number of writes. Since both initially and finally all elements are in the external memory, $X^r = X^w = \frac{X}{2}$. \\ 
+
+Similar to the lecture notes, we come up with:
+
+\begin{equation*}
+  \begin{aligned}
+  \frac{n!}{\big(B!\big)^{\frac{n}{B}}} &\leq \bigg(\frac{n}{B} \bigg)^{\frac{X}{2}} . \bigg(\frac{3n}{B} \binom MB\bigg)^{\frac{X}{2}} \\
+  &= 3^{\frac{X}{2}}.\frac{n}{B}^X.\bigg(\binom MB\bigg)^{\frac{X}{2}} \\
+  \iff X.\log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg) &\geq \log \bigg(\frac{n!}{(B!)^{\frac{n}{B}}}\bigg)
+\end{aligned}
+\end{equation*}
+
+Similar to the course notes, we derive the following bound of the right-hand-side expression from Stirling's approximation:
+
+$$\log \biggl(\frac{n!}{(B!)^{\frac{n}{B}}}\bigg) = \Omega(n\log(n/B))$$
+
+For the left-hand-side expression, using the condition that $n < B\sqrt{\binom MB}$, and the inequality $\binom MB \leq 
+\big(\frac{eM}{B}\big)^B$, we get:
+
+\begin{equation*}
+  \begin{aligned}
+  \log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg) &< \log \bigg(3^\frac{1}{2} . \binom MB \bigg) \\
+  &\leq \frac{\log 3}{2} + B \log \biggl( \frac{eM}{B} \bigg) \\
+  &\leq 3B \log \big(\frac{M}{B}\big)
+\end{aligned}
+\end{equation*}
+
+Hence:
+
+\begin{equation*}
+  \begin{aligned}
+    X &\geq \frac{\log \biggl(\frac{n!}{(B!)^{\frac{n}{B}}}\bigg)}
+    {log \bigg(3^\frac{1}{2}.\frac{n}{B}.\bigg(\binom MB\bigg)^\frac{1}{2} \bigg)} \\
+    & = \frac{\Omega(n\log(n/B))}{3B \log \big(\frac{M}{B}\big)} \\
+    & = \Omega \big( (n/B)\log_{M/B}(n/B)\big)
+\end{aligned}
+\end{equation*}
+
+

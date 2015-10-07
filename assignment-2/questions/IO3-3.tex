@@ -12,16 +12,16 @@
     \Require $G( V, E )$
     \Ensure Color of $v_i \in V$
     \Operation
-    \State Convert $G$ into a directed graph $G^*$
+    \State Convert $G$ into a DAG graph $G^*$ by directing every edge ( $v_i$, $v_j$ ) where $i < j$
     \State Initialise an array F[0..$n-1$], a min-priority queue $Q$
-    \State Initialise a set of colour C[0..$d_{max}$]
+\State Initialise a set of colour C := \{$c_0$, $\cdots$, $c_{d_{max}}$\}
     \For {$i$ := 0 to $n-1$}
-    	\State Performs $Extract-Min$ operations on $Q$ until getting a pair whose priority $i' > i$
-	\State Insert the extra extracted pair back to $Q$
-	\State $f(v_i)$ := Choose one colour from C $\setminus$ \{ extracted pairs \}
+    	\State $NeighborColours$ := Performs $Extract-Min$ operations on $Q$ until getting a pair whose priority $i' > i$
+	\State Insert the extra extracted pair back to $Q$ and remove it from $NeighborColours$
+	\State $f(v_i)$ := Choose one colour from C $\setminus$ $Neighborcolours$
 	\State F[i] := $f(v_i)$
 	    \For { each $j$ in $V[i].OutNeighbors$ }
-	        \State Insert a part ( $f(v_i)$, $j$ ) into $Q$
+	        \State Insert a pair ( $f(v_i)$, $j$ ) into $Q$
 	   \EndFor
     \EndFor \\
     \Return F
@@ -30,13 +30,17 @@
 \textbf{Theorem.} The algorithm performs $O( SORT(|V|+|E|) )$ and returns valid solution.
 
 \begin{proof}
-We observe that each iteration the algorithm performs $$2O( SORT(1 + |N_{in}(v_i)| ))$$
+    Let denote $N_{in}$ a set of in-neighbor of $v_i \in V$. We observe that each iteration the algorithm performs
+    $$2O( SORT(1 + |N_{in}(v_i)| ))$$
 One from $Extract-Min$ operation and the other from $Insertions$. \\
 Thus, the total I/O's complexity  is :
 \begin{align*}
- \sum^{n-1}_{i=0}{O( 1 + |N_{in}(v_i)} = O( SORT( |V|+|E| ))
+    T_{io}(G(V,E)) &= \sum^{n-1}_{i=0}{O( 1 + |N_{in}(v_i)|)} \\
+    &= O( SORT( |V|+|E| ))
 \end{align*}
-\\
-To prove that the algorithm returns valid solution. We first argue that the algorithm does not use more than $d_max + 1 $ colours . Secondly, there are not 2 adjacent nodes having same colour because each time it picks a colour the list of colours is subtracted by colours used for its in-neighbors.
-	
+
+To prove that the algorithm returns valid solution. We first claim that the algorithm does not use more than $d_{max} + 1 $ colours because
+there is always at least 1 colour left in the list $C$. Secondly, there are no 2 adjacent nodes having same colour
+because every time the algorithm chooses a colour, it chooses a colour from the list which is subtracted by the set of colours used by its in-neighbors.
+
 \end{proof}

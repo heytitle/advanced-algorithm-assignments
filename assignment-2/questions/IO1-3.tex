@@ -1,25 +1,30 @@
 \section*{IO.1-3}
 \subsection*{(i)}
+
+The recurrence formula of I/O's complexity of a binary search is as follow:
+$$T(n) = T(n/2)$$
+The base case is $T(n) = 1$ where $n \leq B$. \\
+
 The worst case of a binary search is when each step of comparison, we need to do an I/O to load the next center until the 2 consecutive centers are in the same block, which means the remaining array has to fit in 1 block. Suppose that after $k$ steps of binary searching, we reach that state, then both the left and right subtrees are inside 1 block:
 
 $$2 \frac{n}{2^k} \leq B \iff \frac{n}{2^k} \leq \frac{B}{2}$$
 
 Then,
 
-$$k \geq log_2 \frac{2n}{B} = log_2 \frac{n}{B} + 1 = O(log_2 \frac{n}{B}) $$
+$$k \geq \log_2 \frac{2n}{B} = \log_2 \frac{n}{B} + 1 = O(\log_2 \frac{n}{B}) $$
 
-This means we have to do $O(log_2(n / B))$ I/Os before everything is inside the memory.
+This means we have to do $O(\log_2(n / B))$ I/Os before everything is inside the memory.
 
 \subsection*{(ii)}
-To avoid the case that we perform an I/O everytime we make a comparison, we can organize the blocks differently. Starting from the root node of the binary search tree, we continue adding the child nodes to the block until it is full, then we repeat the process agafor the remaining nodes. In general, each block is a subtree of size $B$, starting from the root node.\\
+To avoid the case that we perform an I/O's every time we make a comparison, we can organize the blocks differently. Starting from the root node of the binary search tree, we continue adding the child nodes to the block until it is full, then we repeat the process again for the remaining nodes. In general, each block is a subtree of size $B$, starting from the root node.\\
 
-We know that the height of the parent tree (also the length of a search path) is $log(n)$, and the height of each subtree is $log(B)$. Each time we perform a search, the number of I/Os that need to be performed is the number of subtrees that each path contains. which is:
+We know that the height of the parent tree (also the length of a search path) is $\log(n)$, and the height of each subtree is $\log(B)$. Each time we perform a search, the number of I/Os that need to be performed is the number of subtrees that each path contains. which is:
 
-$$\#I/Os = \frac{log(n)}{log(B)} = log_B (n)$$
+$$\#I/O's = \frac{\log(n)}{\log(B)} = \log_B (n)$$
 
-So we have to perform $O(log_B (n))$ I/Os using the new grouping strategy, which is significantly better than the previous I/O complexity ($O(log(n/B))$).
+The new grouping strategy is significantly better than the previous I/O's complexity $O(\log(n/B))$.
 
 \subsection*{(iii)}
-Our proposed solution significantly increase the spatial locality. In the original approach, we load a block to read only 1 center. Meanwhile, in our solution, at least $log(B)$ items in a block are useful for the algorithm.\\
+Our proposed solution significantly increase the spatial locality. In the original approach, we load a block to read only 1 center. Meanwhile, in our solution, at least $\log(B)$ items in a block are useful for the algorithm.\\
 
 The temporal locality of the 2 approaches is the same. It is because we never reuse the block again after reading it, in both methods.
