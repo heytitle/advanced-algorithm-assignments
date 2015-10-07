@@ -38,7 +38,7 @@ Thus, the total I/O's complexity  is :
     T(G(V,E)) &= \sum^{n-1}_{i=0}{O( 1 + |N_{in}|)(v_i)} \\
     &= O( SORT( |V|+|E| ))
 \end{align*}
-\\
+
 To prove that the algorithm returns valid solution. We first argue that the algorithm does not use more than $d_{max} + 1 $ colours .
 Secondly, there are no 2 adjacent nodes having same colour because each time it picks a colour the list of colours is subtracted by colours used for its in-neighbors.
 

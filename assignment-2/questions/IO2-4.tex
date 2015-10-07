@@ -8,7 +8,7 @@ free block in A. After finishing the permutation task, we write these blocks bac
   \item The total number of permutations of an array A of size $n$ is $n!$. In this problem, we do not care about the number of 
 permutations inside a block. So we ignore $(B!)^{\frac{n}{B} }$ permutations. Then the total number of permutations available is 
 $\frac{n!}{(B!)^{\frac{n}{B} }}$.
-\item Because we write each block back to the main memory if it is written outside, one read can create a number of possible states as $\frac{n}{B} $
+\item Because we write each block back to the internal memory if it is written outside, one read can create a number of possible states as $\frac{n}{B} $
 \item One write can create a number of possible states as $\frac{3n}{B} \binom MB$
 \end{itemize}
 
