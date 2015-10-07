@@ -14,9 +14,9 @@ The number of steps needed to reach such case is $\log(n/B)$. Then the error of 
 $$\#I/Os = \log(n/B) \pm O(1)$$
 
 \subsection*{(ii)}
-Instead of storing blocks as in-order traversal, we will separate the tree in to small subtrees of size B and store it into a block as shown in figure \ref{fig:blocking}.\\
-\\We know that the depth of the tree is $\log n$ and the depth of subtree is $\log B$. Therefore IO's complexity of root-to-leaf traversal is :
-$$T(n) = \frac{\log n}{\log B} = \log_{B} n$$
+Instead of storing blocks as in-order traversal, we will separate the tree in to small subtrees of size B and store it into a block as shown in figure \ref{fig:blocking}.
+We know that the depth of the tree is $\log n$ and the depth of subtree is $\log B$. Therefore IO's complexity of root-to-leaf traversal is :
+$$T_{io}(n) = \frac{\log n}{\log B} = \log_{B} n$$
 
 As shown in figure \ref{fig:blocking}, this blocking strategy make the tree look similar to B-tree in a sense that
 its nodes are grouped into subtrees and each subtree is comparable to a node in B-tree that can have more than 1 element.
