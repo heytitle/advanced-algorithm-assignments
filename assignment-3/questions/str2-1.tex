@@ -1,0 +1,120 @@
+\section*{II-1}
+\subsection*{(i)}
+We know that $\expt{\widetilde{\Phi}(\sigma)} = \Phi(\sigma)$ and $\var{\widetilde{\Phi}(\sigma)} = (1/3)\cdot \Phi(\sigma)$, thus:
+
+$$\pr{|\widetilde{\Phi}(\sigma)- \Phi(\sigma)| \geq c\cdot \Phi(\sigma)}
+= \pr{|\widetilde{\Phi}(\sigma)- \expt{\widetilde{\Phi}(\sigma)} \geq \
+3c \cdot \var{\widetilde{\Phi}(\sigma)}}$$
+
+According to Chebyshev Inequality, we have:
+
+$$\pr{|\widetilde{\Phi}(\sigma)- \expt{\widetilde{\Phi}(\sigma)} \geq \
+3c \cdot \var{\widetilde{\Phi}(\sigma)}} 
+= \pr{|\widetilde{\Phi}(\sigma)- \expt{\widetilde{\Phi}(\sigma)} \geq \
+3c \cdot \sqrt(\var{\widetilde{\Phi}(\sigma)}) \cdot \sqrt(\var{\widetilde{\Phi}(\sigma)})} 
+\leq \frac{1}{9 \cdot c^2 \cdot 
+  \sqrt(\var{\widetilde{\Phi}(\sigma)})} $$
+
+To let 1/6 be the upper bound of this probability, we have to choose a value of $c$ such that:
+
+\begin{equation*}
+  \begin{align}
+9 \cdot c^2 \cdot \var{\widetilde{\Phi}(\sigma)} &= 6
+c &= \sqrt(\frac{6}{9\var{\widetilde{\Phi}(\sigma)}})
+&= \sqrt(\frac{2}{3 \frac{\Phi(\sigma)}{3}})
+\end{align}
+\end{equation*}
+
+Since we know that $\Phi(\sigma} > 3$, then:
+
+\begin{equation*}
+  \begin{align}
+c &= \sqrt(\frac{2}{\Phi(\sigma}))
+& < \sqrt(\frac{2}{3})
+\end{align}
+\end{equation*}
+
+This value of c statisfies the condition that $0 < c < 1$.
+
+\subsection*{(ii)}
+
+The idea of the new algorithm is to run \alg $k$ times, then taking the median of the $k$ return values $\widetilde{\Phi}(\sigma)$ (the Median trick). Before modify the algorithm formally, we make some analysis as follows. \\
+
+Let $X_i$ be an indicator random variable, which is defined as:
+
+\[ 
+  X_i = \begin{cases}
+    1 \text(if) \pr{|\widetilde{\Phi}(\sigma)- \Phi(\sigma)| \geq c\cdot \Phi(\sigma)} \\
+    0 \text(otherwise)
+  \end{cases}
+\]
+
+Let $X = \sum_{i=1}{k} X_i$ be the random variable representing the final outcome of the new algorithm. We have:
+
+\begin{equation*}
+  \expt{X} = \expt{\sum_{i=1}{k} X_i} = \sum_{i=1}{k} \expt{X_i}
+\end{equation*}
+
+In this algorithm, we used the specified value of $c$ in part (i), which confirms that:
+
+\begin{equation*}
+  \begin{align*}
+\pr{|\widetilde{\Phi}(\sigma)- \Phi(\sigma)| \geq c\cdot \Phi(\sigma)} \leq 1/6
+\text{which implies that}
+\pr{X_i = 1} &\leq 1/6
+\text{Because $X_i$ is an indicator random variable, then:}
+\expt{X_i} &= 1/6 
+
+\text{Thus, we have:}
+\expt{X} = \sum{i=1}{k} \expt{X_i} = k / 6
+\end{align*}
+\end{equation*}
+
+When $X_i = 1$, it implies that we do not have the event described in the problem statement. The probability that we do not have it after performing the Median trick is:
+
+\begin{equation*}
+  \begin{align*}
+    \pr{X > \frac{k}{2}} &= \pr{X > 3\expt{x}} = \pr{X > (1 + 2)\expt{x}}
+    &\leq (\frac{e^2}{3^3})^(\frac{k}{6})
+    &= (\frac{e^2}{27})^(\frac{k}{6})
+\end{align*}
+\end{equation*}
+
+Thus, the probability that we get the event described is $1 - (\frac{e^2}{27})^(\frac{k}{6})$. To get the desired value ($1 - \delta$), we have to choose $k$ such that:
+
+\begin{equation*}
+  \begin{align*}
+    \delta &\geq (\frac{e^2}{27})^(\frac{k}{6})
+    \iff \frac{1}{\delta} &\leq (\frac{27}{e^2})^(\frac{k}{6}
+    \iff \log \frac{1}{\delta} &\leq \frac{k}{6} \log \frac{27}{e^2}
+    \iff k \geq \frac{6}{\log \frac{27}{e^2}} \cdot \log{1}{\delta}
+    \text{We can choose}
+    k = \lceil 4\log \frac{1}{\delta}
+\end{align*}
+\end{equation*}
+
+In conclusion, we modify the algorithm as follow:
+
+\begin{algorithm}
+  \caption{Revised Algorithm Taking \alg as Sub-Routine}
+  \label{alg:revise}
+  \begin{algorithmic}
+    \Require A stream $\sigma = <a_1, \cdots, a_m>, \delta$
+    \Ensure Statistics $\widehat{\Phi}(\sigma)$
+    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+    \renewcommand{\algorithmicensure}{\textbf{Output:}}
+    \algnewcommand\algorithmicoperation{\textbf{Operation:}}
+    \algnewcommand\Operation{\item[\algorithmicoperation]}
+    \Operation
+    \State Choose $k := \lceil 4\log \frac{1}{\delta}$
+    \State Init $J := \empty$
+    \For {i from 1 to k}
+    \State $\widetilde{\Phi}_i(\sigma} := \alg()$
+    \State $J = J \cup \widetilde{\Phi}_i(\sigma}$ 
+    \EndFor
+
+    \Return The median of set $J$
+  \end{algorithmic}
+\end{algorithm}
+
+The algorithm needs to store the set $J$ of $k$ elements, and each run of \alg stores $B(n,m)$ bits, so the total number of bits used by the algorithm is $O(kB(n,m))$.
