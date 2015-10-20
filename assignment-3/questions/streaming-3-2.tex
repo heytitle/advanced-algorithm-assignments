@@ -1,0 +1,18 @@
+% !TEX root = ../main.tex
+
+\section*{Str.III-2}
+
+According to the question we know that $ \widetilde{F}_{\sigma} [j]  > m/2 + F_{\sigma}[j]$. That means $h(j)$ must be equal to $h(j^*)$ where $j^*$ is an item that occurs $m/2+1$ time. We also know that the probability that $h(j) = h(j^*)$ is $1/k$.
+Thus $h(j) \neq h(j^*)$ is $(k-1)/k$.
+
+Then the probability that the hash value of other $m/2-1$ items is not $h(j^*)$ is :
+\begin{align*}
+\big(\frac{k-1}{k}\big)^{m/2-1} &< (1-0.99) \\
+\big(\frac{9}{10})^{m/2-1} &< 0.01 \\
+(m/2-1)\log (0.9)   &< \log (0.01) \\
+m &> 2\Bigg( \frac{ log(0.01)}{log(0.9)} + 1  \Bigg) \\
+m &> 89.41 \\
+& \ge 90
+\end{align*}
+
+Therefore, one possible stream for this particular case is a stream size $90$ that has an item $j^*$ occurs 46 time and one of the other 44 tokens is an item $j$ whose $h(j) = h(j^*)$.
