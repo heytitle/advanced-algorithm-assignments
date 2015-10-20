@@ -3,12 +3,20 @@
 \usepackage{amsthm}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{a4wide,amsmath,amssymb,fancyhdr,graphicx,tabularx,xspace}
 \graphicspath{ {assets/} }
 
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric,arrows,fit,matrix,positioning}
+
+\DeclareMathOperator{\expectation}{E}
+\DeclareMathOperator{\variance}{Var}
+
+\newcommand{\var}[1]{\variance\left[#1\right]}
+\newcommand{\expt}[1]{\expectation[#1]}
+\newcommand{\alg}{{\sc Alg}\xspace}
+\newcommand{\pr}[1]{\Pr[#1]}
 
 \begin{document}
 
@@ -20,6 +28,7 @@
 }
 \maketitle
 
-\input{questions/IO1-1.tex}
+\input{questions/streaming-1-1.tex}
+\input{questions/streaming-2-1.tex}
 
 \end{document}
