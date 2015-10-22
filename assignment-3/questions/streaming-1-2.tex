@@ -1,0 +1,45 @@
+% !TEX root = ../main.tex
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
+
+\section*{Str.I-2}
+
+\begin{algorithm}[h]
+  \caption{Find Two Missing Item}
+  \label{alg:find-2-missing-item}
+  \begin{algorithmic}
+      \Require A stream $\langle a_1, \dotsc, a_{n-2} \rangle$ where $a_i = (j,1)$
+      \State Compute $remainingSum \gets n(n+1)/2$ and  $remainingSumOfSquare \gets n(n+1)(2n+1)/6$
+      \State Process( $a_i $ ):
+      		\Indent
+     			\State $remainingSum := remainingSum - j$
+			\State $remainingSumOfSquare := remainingSumOfSquare - j^2$
+		\EndIndent
+	\State Compute 2 missing items from $\frac{ remainingSum \pm \sqrt{ remainingSum^2 - 2( remainingSum^2 - remainingSumOfSquare ) } }{2}$\\
+  \Return the missing items
+\end{algorithmic}
+\end{algorithm}
+
+We will prove the correctness of the algorithm by analysing a quadratic equation degree 2. 
+$$ (x+y)^2 = x^2 + 2xy + y^2 $$
+
+Let $x$, $y$ denote 2 missing items in the stream and $\Delta_s$, $\Delta_{ss}$ denote $remainingSum$ and $remainingSumOfSquare$ after the algorithm processes $n-2$ tokens. Thus
+\begin{align*}
+	\Delta_s^2 &= \Delta_{ss} + 2xy \\
+	2xy &= \Delta_s^2 - \Delta_{ss} \\
+	xy &= \frac{\Delta_s^2 - \Delta_{ss}}{2}
+\end{align*}
+
+Next, we first simplify the equation by denoting $A$ as $(\Delta_s^2 - \Delta_{ss})/2$. We know that
+\begin{align*}
+	x+y &= \Delta_s \\
+	x + A/x &= \Delta_s \\
+	x^2+A  &= \Delta_s x\\
+	x^2 - \Delta_s x + A &= 0 \\
+	x &= \frac{\Delta_s + \sqrt{\Delta_s^2 - 4A}}{2} \\
+	&= \frac{\Delta_s + \sqrt{\Delta_s^2 - 2(\Delta_s^2 - \Delta_{ss})}}{2}\\
+\end{align*}
+Thus
+$$ 	y = \frac{\Delta_s - \sqrt{\Delta_s^2 - 2(\Delta_s^2 - \Delta_{ss})}}{2} $$
+Therefore, the algorithm always returns correct answer. Next, considering bits of storage, we see that the algorithm need to store only 2 values, namely $totalSum$ and $totalSumOfSquare$ and the maximum value is $O(n^3)$. Thus, the algorithm need $O(\log n )$ bits to store such values.
