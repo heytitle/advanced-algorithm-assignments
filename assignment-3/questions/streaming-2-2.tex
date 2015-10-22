@@ -1,0 +1,65 @@
+\section*{Str.II-2}
+To approximate the MEDIAN of a stream without knowing $m$ in advance, we modify the algorithm.
+
+\begin{algorithm}[h]
+  \caption{Estimate MEDIAN of a stream}
+  \label{alg:median}
+  \begin{algorithmic}
+      \Require A stream $\langle a_1, \dotsc, a_m \rangle $ 
+
+      \State Initialize:
+      \State Choose suitable integer $k \geq 1$ to obtain the desired success probability.
+      \State Init $J := \emptyset$
+
+      \State Process( $a_i$ ):
+      \For{j from 1 to k}
+      \State Generate a random number $r$ from $\{1, \cdots, i\}$
+      \If{$r = 1$}
+      \State $J := J \cup a_i$
+      \If{$|J| > k$}
+      \State Remove a random item from $J$
+      \EndIf
+      \EndIf
+      \EndFor
+
+      \Return the median of set J
+     
+  \Return $I$
+\end{algorithmic}
+\end{algorithm}
+
+Similar to the algorithm in the course note, this algorithm needs to store the set $J$ and $k$ random numbers, which use
+$O(k\log(n+m)$ bits in total. \\ 
+
+We define for each $j \in {1, \cdots, k}$ the indicator random variables $X_j$ and $Y_j$ as:
+
+\[ 
+  X_j = \begin{cases}
+    1 \text{	if } rank(a_r) > \lfloor 3(i + 1) / 4 \rfloor \\
+    0 \text{	otherwise}
+  \end{cases}
+\]
+
+\[ 
+  Y_j = \begin{cases}
+    1 \text{	if } rank(a_r) < \lceil (i + 1) / 4 \rceil \\
+    0 \text{	otherwise}
+  \end{cases}
+\]
+
+We also define $X = \Sigma_{j=3}^k X_j$ and $Y = \Sigma_{j=1}^k Y_j$. Now suppose the item we report is not in a (1/4)-approx median. Then its rank is either in the right-most quartile or the left-most quartile. In the former case, $X > k/2$. Similarly, in the latter case, $Y > k/2$. \\
+
+Because $r$ is chosen as random, then $\expt{X_j} = \expt{Y_j} = 1/4$. Then:
+
+$$\expt{X} = E\big[ \Sigma_{j=1}^k X_j\big] = 
+\Sigma_{j=1}^k \expt{X_j} = k/4$$
+
+Using the Chernoff bound, we get: 
+
+$$\pr{X > k/2} = \pr{X > 2E[X]} \leq \big(\frac{e}{4}\big)^{k/4}$$
+
+Similarly, $$\pr{X > k/2} \leq \big(\frac{e}{4}\big)^{k/4}$$. Hence, 
+
+$$\pr{\text{The algo returns a (1/4)-approx median}} \geq 1 - 2\big(\frac{e}{4}\big)^{k/4}$$
+
+We can get the desired success probability ($1 - \delta$) by choosing $k$ such that $(e/4) ^ {k/4} \leq \delta / 2$. By solving it, we get $k = \lceil 8\log (2/\delta) \rceil$.
