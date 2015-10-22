@@ -27,7 +27,7 @@
 
 The algorithm in vanilla model can be adapted to cash-register model by initialise $c(j)$, a counter of $j$, with $c$ or increase $c(j)$ by $c$ if $j \in I$. Secondly, if there are too many items in $I$, $ |I| \ge 1/\epsilon$, $c(j)$ for all $j$ in $I$ will be decreased by  $\min\limits_{  j \in I}  c(j)$.
 
-Next, let denote a token $( j^*, c^* )$ as a token that is going to be processed next and $j_{min}$ whose $c(j_{min})  = \min\limits_{  j \in I}  c(j)$ in that time.  We will argue that the algorithm in cash-register model correctly computes a superset of the $\epsilon$-frequent items by comparing its behaviours with the orignal algorithm in vanilla model in 2 conditions, namely when $c^* \ge minFreq$ and $c^* < minFreq$.
+Next, let denote a token $( j^*, c^* )$ as a token that is going to be processed next and $j_{min}$ whose $c(j_{min})  = \min\limits_{  j \in I}  c(j)$ in that time.  We will argue that the algorithm in cash-register model correctly computes a superset of the $\epsilon$-frequent items by comparing its behaviours with the original algorithm in vanilla model in 2 conditions, namely when $c^* \ge minFreq$ and $c^* < minFreq$.
 
 For $c^* \ge minFreq$, after the original algorithm processes a token $(j^*, 1)$ $c(j_{min})$ time, $j_{min}$ will be removed from $I$ and when it processes the rest of $(j^*, 1)$, $c(j^*)$ will equal to $c^* - c(j_{min})$. This is exactly the same as the modified algorithm does when $(j^*, c^*)$ arrives, $j_{min}$ will be removed since $c(j_{min})$ becomes zero after subtracted by itself and $j^*$ remains in $I$ with $c(j^*) := c(j^*) - c(j_{min})$.
 

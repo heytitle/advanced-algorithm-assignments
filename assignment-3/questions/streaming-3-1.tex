@@ -1,0 +1,7 @@
+\section*{Str.III-1}
+In theorem 10.4, we prove the lower bound and the upper bound of the Count-Min sketch. To get the lower bound, we use the property of the Strict Turnstile model that $F_\sigma [j] \geq 0, \forall j \in [n]$, then $C[s, h_s(j)] \geq F_\sigma [j]$. In the general turnstile model, $F_\sigma[j]$ can be negative, so 
+$C[s, h_s(j)]$ is not always greater than or equal to $F_\sigma [j]$. The lower bound is not $F_\sigma [j]$ anymore. \\
+
+To get the upper bound, we use Markov Inequality. But it holds only if $X$ is a non-negative random variable. In this case, $X = C[s, h_s(j)] - F_\sigma [j]$ can be negative, so the upper bound can also be different. \\
+
+So in general, the proof of 10.4 does not work in the general turnstile model.
