@@ -1,0 +1,40 @@
+\section*{Str.II-3}
+By choosing a suitable $k$, the algorithm performs as follows.
+
+\begin{itemize}
+    \item Pass 1: Sampling items. \\
+
+      Take $k$ random integers from ${1, \cdots, m}$ \\
+
+    Collect all tokens at the positions we have just random sampled, into a set $J$. \\
+
+    Sort the set $J$
+
+    \item Pass 2: Calculate Ranks. \\
+
+      Init a set $C$ of counters. \\
+
+      For each token $a_i$, find suitable $a_j$ in $J$ such that $a_{j-1} < a_i \leq a_j$.\\
+
+      Increase $C[j]$. After pass 2, $C$ is the set of ranks of the sampled items.
+
+      From $J$, pick 2 consecutive items $a_l$ and $a_r$ such that $C[l] \leq (m + 1) / 2 \leq C[r]$.
+
+    \item Pass 3: Get the median. \\
+
+      Collect all items between $a_l$ and $a_r$ and sort into array $A$.\\
+
+      Init $rank = C[l]$.\\ 
+      
+      Traverse each item in $A$, $rank += 1$ for each item. 
+
+      Stop when $rank = (m + 1) / 2$. Return $A[rank - C[l]]$.
+  \end{itemize}
+
+  The idea of the algorithm is to use random sampling to split the stream into bins. Then we pick the bin that contain the exact median (pass 2). Finally, we collect all data in that bin, and find the exact median by calculating ranks. Because in the last pass, we store all related values, so the algorithm always returns the exact median. \\
+
+   The storage used depends on the size of the $\{a_l,\cdots, a_r\}$ array.\\ 
+
+  Let $X$ be the random variable indicating the distance between $a_l$ and $a_r$, then we have $\expt{X} = m/k$. \\
+
+ Markov inequality says: $\pr{X \geq t \cdot \expt{X}} \leq 1/t$. We want $1/t$ to be $0.05$, then $t = 20$. So we choose $k = 20 \sqrt{m}$ to have the number of storage of $O(\sqrt{m} \log n)$ with probatility at least $1 - 0.05 = 0.95$.\\
